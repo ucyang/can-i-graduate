@@ -116,12 +116,17 @@
     #table-row{
       top:-500px;
     }
+
+     .credit{
+       top:-330px;
+     }
     #graph-row{
       height:700px;
-      width:120%;
+      width:100%;
     }
+
     @media screen and (max-width:760px) {
-      #table-row{
+      #table-row, .credit{
         top: auto;
       }
       #integrate-chart{
@@ -131,7 +136,12 @@
       #graph-row{
         height:1150px;
       }
+
     }
+
+}
+
+
   </style>
 </head>
 <body>
@@ -144,19 +154,31 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container graph-container justify-content-center">
     <div class="row" id="graph-row">
       <!--학점 반원 그래프-->
       <div class="col-12 col-md-5" id="pie-chart">
 
         <div class="col-12" id="credit-chart"></div>
+
         <div class="col-12" id="major-credit-chart"></div>
+
       </div>
+
       <!--밑에 표 내용을 한 번에 보여주는 막대 그래프-->
       <div class="col-12 col-md-7" id="integrate-chart">
 
       </div>
+      <div class="col-2 credit">
+        졸업 학점: 4.0
+      </div>
+      <div class="col-2 credit">
+        전공 졸업 학점: 4.0
+      </div>
     </div>
+  </div>
+
+  <div class="container">
     <div class="row" id="table-row">
       <!--졸업관련 정보를 보여주는 표들-->
       <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
