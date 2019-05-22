@@ -51,7 +51,7 @@ print <<<_FORM_
 _FORM_;
 }
 function validate_form( ) {
-	// global $conn; // 처음부터 저장이 업데이트 잘 되어있어야.
+	// global $conn;
     $input = array();
     $errors = array();
     
