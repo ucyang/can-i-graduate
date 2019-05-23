@@ -28,8 +28,8 @@
       $_SESSION[is_login] = true; //로그인 되어 있는지 확인 하는데 쓰이는 변수
       $_SESSION[user_id] = $memberInfoArr[user_id];
       $_SESSION[nickname] = $memberInfoArr[nickname];
-      echo '로그인 성공';
-      echo '<a href="login.php">돌아가기</a>';
+      echo '로그인 성공 : ';
+      echo '<a href="dashboard.php">대시보드 페이지로</a>';
     }else{
       //비밀번호가 틀리면
       echo '비밀번호가 틀렸습니다..';
