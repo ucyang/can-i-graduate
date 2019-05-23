@@ -191,164 +191,167 @@
         </form>
       </div>
 
+      <script language="JavaScript">
+        document.onload = function() {
+        };
+      function setting(obj){
+        if(obj.value == "X"){
+          obj.className = "btn-danger btn-block";
+        }else{
+          obj.className = "btn-primary btn-block";
+        }
+      }
+      function change(obj){
+        if(obj.value == "O"){
+          obj.value = "X";
+          obj.className = "btn-danger btn-block";
+        }else{
+          obj.value = "O";
+          obj.className = "btn-primary btn-block";
+        }
+      }
+</script>
+
       <div class="container">
         <h3>세부 졸업 요건</h3>
         <form  action="save_detail.php" method="post">
           <div class="row" id="table-row">
             <!--졸업관련 정보를 보여주는 표들-->
             <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
+            <div class="col-12 col-md-6 col-lg-4" style="width:100%; height:300px;overflow: auto ;margin-bottom:20px">
               <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
               <table class="table table-bordered">
                 <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
+                  <th colspan="2" class="col-12">공통교양</th>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">ACT</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"   value="O" ></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">한국사</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">글쓰기</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="X" ></td>
+                </tr>
+                <tr>
+                  <td class="col-7">창의와소통</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                </tr>
+                <tr>
+                  <td class="col-7">디자인적사고와 문제해결</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                </tr>
+                <tr>
+                  <td class="col-7">앙트레프레너십시대의회계</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                </tr>
+                <tr>
+                  <td class="col-7">COMMUNICATION IN ENGLISH</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
                 </tr>
               </table>
             </div>
 
             <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
+            <div class="col-12 col-md-6 col-lg-4" style="width:100%; height:300px;overflow: auto ;margin-bottom:20px">
               <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
               <table class="table table-bordered">
                 <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
+                  <th colspan="2" class="col-12">전공필수</th>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">창의적설계</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">이산수학</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">자료구조</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">프로그래밍언어론</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">컴퓨터구조</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">알고리즘</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">운영체제</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">휴먼ICT소프트웨어공학</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">캡스톤디자인(1)</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">캡스톤디자인(2)</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                </tr>
+                <tr>
+                  <td class="col-7">산업체인턴쉽</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
               </table>
             </div>
 
             <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
+            <div class="col-12 col-md-6 col-lg-4"style="width:100%; height:300px;overflow: auto ;margin-bottom:20px" >
               <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
               <table class="table table-bordered">
                 <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
+                  <th colspan="2" class="col-12">공통졸업요건</th>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">영어능력</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">한자능력</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
-                <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
+
               </table>
             </div>
 
             <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
+            <div class="col-12 col-md-6 col-lg-4" style="width:100%; height:300px;overflow: auto ;margin-bottom:20px">
               <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
               <table class="table table-bordered">
                 <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
+                  <th colspan="2" class="col-12">전공졸업요건</th>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">지도교수와 상담4회</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">졸업논문</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
                 <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
+                  <td class="col-7">TOPCIT점수</td>
+                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
                 </tr>
               </table>
             </div>
 
-            <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
-              <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-              <table class="table table-bordered">
-                <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-              </table>
-            </div>
 
-            <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
-              <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-              <table class="table table-bordered">
-                <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-              </table>
-            </div>
 
-            <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" >
-              <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-              <table class="table table-bordered">
-                <tr>
-                  <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건1</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건2</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-                <tr>
-                  <td class="col-7">졸업요건3</td>
-                  <td class="col-5"><input type="text" name="해당값" value="해당값"></td>
-                </tr>
-              </table>
-            </div>
 
 
 
