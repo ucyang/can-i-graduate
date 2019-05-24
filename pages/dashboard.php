@@ -1,344 +1,117 @@
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<?php
+	session_start();
+	if(! array_key_exists('user_id', $_SESSION)) Header("Location:./login.php");
+	
+	$conn = mysqli_connect('127.0.0.1','cig_admin','1','can_i_graduate');
 
-  <!--부트스트랩-->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	/*	관리자인 경우
+	
+	- 전 범위 정기적으로 자동 갱신하기
+	- 학사요강 제공을 위한 JSON 만들기
+	- 교직이수, 복수전공 등은 추후 고민
+	- class 마다 parsing 한 후 제공함
+	
+	*/
+	
+	if($_SESSION['user_id']=='admin'){ // []. () : function
+		$json_string = './2018_1_UC_SC_ICT_CE.json';
+		$json_data = file_get_contents($json_string);
+		$lecture = json_decode($json_data, true);
+		foreach ($lecture[selectSust] as $record){ // $arr as $k=>$v
+			// [remk](비고), [pnt](학점-시간) parsing 필요.
+			// clssnmlk, profnmlk는 classnm, profnm과 중복됨.
+			// 'seoul', 'cau' 부분도 참조 가능하지만 놔둠.
+			echo $record[clssnm];
+			$sql = "INSERT INTO lectures (course_no, class_no, year, semester, campus, 
+			college, dept, title, inst_name, credit, course_class, course_type, abeek_type) VALUES 
+			($record[sbjtno], $record[clssno], $record[shyr], $record[shyr2], 'seoul', 
+			'cau', $record[colgnm], $record[clssnm], $record[profnm], 3, $record[sustnm], $record[pobtnm], $record[remk])";
+		}
+	}
+	/*	사용자인 경우
+	
+	- 일부 입력은 여기서 받도록 대체
+	- 학기 별 일정, 진행상황 보여주기
+	- 가능하면 planner UI로 확장하기
+	- 이러면 학기 생성, 성적 확정 필요
+	
+	*/
+	else{
+		
+		// 성적 올리기
+		
+print <<<_HTML_
+	<form method="post" enctype="multipart/form-data">
+		올리기 : <input type="file" name="fileToUpload" id="fileToUpload">
+		<input type="submit" value="Upload" name="submit">
+	</form>
+_HTML_;
+		
+		$target_dir = "/workspace/PHP/";
+		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+		$uploadOk = 1;
+		$FileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-  <!--구글 차트-->
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
+		if($FileType != ""){ // $_FILES["fileToUpload"]["size"]
+			if (file_exists($target_file)) {
+				echo "Sorry, file already exists.";
+				$uploadOk = 0;
+			}
+			if($FileType != "csv") {
+				echo "Sorry, only csv files are allowed.";
+				$uploadOk = 0;
+			}
+			if ($uploadOk == 0) {
+				echo " Your file is not uploaded.";
+			} else {	
+				if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+					echo "The file ". basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+				} else {
+					echo "Server Error";
+				}
+			}
+		}
+		
+		// detailPage로 넘어가기
+		
+print <<<_HTML_
+	<form method="post" action="detailPage.php">
+		<button type="submit">세부 조회</button>
+	</form>
+_HTML_;
 
-    google.charts.load('current', {'packages':['corechart']});
+		// 보관 성적 자동 '갱신'하기, 종합지표 계산하기
+		
+		$row = 1;
+		if (($handle = fopen($target_file, "r")) !== FALSE) {
+  			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    			$num = count($data);
+    			echo "<p> $num fields in line $row: <br /></p>\n";
+    			$row++;
+    			for ($c=0; $c < $num; $c++) {
+        			echo $data[$c] . "<br />\n";
+    			}
+  			}
+  			fclose($handle);
+		}
+		
+		// 회원 정보 수정, 회원 탈퇴(쿠키 처리)
+		
+print <<<_HTML_
+	<form method="post" action="reLog.php">
+		<button type="submit">회원 정보 수정</button>
+	</form>
+_HTML_;
+		
+		require 'dashboard_view.php';
+	}
 
-    google.charts.setOnLoadCallback(drawCreditChart);
-    google.charts.setOnLoadCallback(drawMajorCreditChart);
+	// logOut 하기
+print <<<_HTML_
+	<form method="post" action="logOut.php">
+		<button type="submit">나가기</button>
+	</form>
+_HTML_;
 
-    google.charts.setOnLoadCallback(drawBarChart);
-    function drawBarChart() {
-
-      var data = google.visualization.arrayToDataTable([
-          ['졸업요건', '퍼센트',],
-          ['졸업요건1', 50],
-          ['졸업요건2', 70],
-          ['졸업요건3', 60],
-          ['졸업요건4', 40],
-          ['졸업요건5', 50]
-        ]);
-
-
-      // Set chart options
-      var options = {
-                     'title':'졸업요건',
-                     'width': '100%',
-                     'height': 630,
-                     'chartArea': {'width': '75%', 'height': '80%'},
-                     'legend':{position:'none'}
-                    };
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.BarChart(document.getElementById('integrate-chart'));
-      chart.draw(data, options);
-      window.addEventListener('resize', function() { chart.draw(data, options); }, false);
-
-
-    }
-    function drawMajorCreditChart() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'credits');
-      data.addColumn('number', 'number');
-      data.addRows([
-        ['수강한 학점', 90],
-        ['남은 학점', 50],
-        [null,140]
-      ]);
-
-      // Set chart options
-      var options = {
-                     'title':'내 전공 학점이 얼마나 남았나',
-                     'width': 450,
-                     'height': 450,
-                     'chartArea': {'width': '100%', 'height': '80%'},
-                     'pieHole':0.4, //가운데 구멍 조금 뚫는거
-                     'pieStartAngle': 270,
-                     'slices':{
-                       '2':{
-                       'color': 'transparent'
-                       }
-                     }
-                       };
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('major-credit-chart'));
-      chart.draw(data, options);
-    }
-
-    function drawCreditChart() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'credits');
-      data.addColumn('number', 'number');
-      data.addRows([
-        ['수강한 학점', 90],
-        ['남은 학점', 50],
-        [null,140]
-      ]);
-
-      // Set chart options
-      var options = {
-                     'title':'내 학점이 얼마나 남았나',
-                     'width': 450,
-                     'height': 450,
-                     'chartArea': {'width': '100%', 'height': '80%'},
-                     'pieHole':0.4, //가운데 구멍 조금 뚫는거
-                     'pieStartAngle': 270,
-                     'slices':{
-                       '2':{
-                         'color': 'transparent'
-                       }
-                     }
-                       };
-
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('credit-chart'));
-      chart.draw(data, options);
-    }
-
-  </script>
-  <!--css-->
-  <style>
-    #major-credit-chart{
-      top: -150px;
-    }
-    #table-row{
-      top:-500px;
-    }
-
-     .credit{
-       top:-330px;
-     }
-    #graph-row{
-      height:700px;
-      width:100%;
-    }
-
-    @media screen and (max-width:760px) {
-      #table-row, .credit{
-        top: auto;
-      }
-      #integrate-chart{
-        top:-360px;
-        width:100%;
-      }
-      #graph-row{
-        height:1150px;
-      }
-
-    }
-
-}
-
-
-  </style>
-</head>
-<body>
-  <div class="navbar bg-light">
-    <!--로고-->
-    <a href="#" class="navbar-brand">Can I graduate</a>
-    <!--~님 안녕하세요-->
-    <div class="greeting">
-      (php변수)님 안녕하세요
-    </div>
-  </div>
-
-  <div class="container graph-container justify-content-center">
-    <div class="row" id="graph-row">
-      <!--학점 반원 그래프-->
-      <div class="col-12 col-md-5" id="pie-chart">
-
-        <div class="col-12" id="credit-chart"></div>
-
-        <div class="col-12" id="major-credit-chart"></div>
-
-      </div>
-
-      <!--밑에 표 내용을 한 번에 보여주는 막대 그래프-->
-      <div class="col-12 col-md-7" id="integrate-chart">
-
-      </div>
-      <div class="col-2 credit">
-        졸업 학점: 4.0
-      </div>
-      <div class="col-2 credit">
-        전공 졸업 학점: 4.0
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row" id="table-row">
-      <!--졸업관련 정보를 보여주는 표들-->
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-      <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-      <div class="col-12 col-md-6 col-lg-4" >
-        <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
-        <table class="table table-bordered">
-          <tr>
-            <th colspan="2" class="col-12">졸업요건 분류 이름</th>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건1</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건2</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-          <tr>
-            <td class="col-7">졸업요건3</td>
-            <td class="col-5">해당 값</td>
-          </tr>
-        </table>
-      </div>
-
-
-
-    </div>
-
-
-  </div>
-</body>
+	mysqli_close($conn);
+?>

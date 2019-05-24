@@ -21,9 +21,9 @@ require dirname(__FILE__) . "/config/config.inc.php";
 session_start();
 
 if (array_key_exists("user_id", $_SESSION))
-    Header("Location:./dashboard.php");
+    Header("Location:./pages/dashboard.php");
 else
-    Header("Location:./login.php");
+    Header("Location:./pages/login.php");
 
 /* End of file index.php */
 /* Location: ./index.php *
