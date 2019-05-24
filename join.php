@@ -1,3 +1,19 @@
+<?php
+  if(isset($_POST['submit'])){
+    $encryped_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $conn = mysqli_connect('127.0.0.1','cig_admin','1','can_i_graduate');
+    $joinSql = "INSERT INTO members(user_id,nickname,email,password,major_srl,admission_year,campus,abeek)VALUES('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password',{$_POST['major']},{$_POST['admission_year']},'{$_POST['campus']}','{$_POST['abeek']}')";
+    if(mysqli_query($conn,$joinSql)===false){
+      echo '회원가입 중 오류가 발생<br>오류 내용 :';
+      echo mysqli_error($conn);
+    }
+    echo "회원가입 성공 : ";
+    echo '<a href="login.php">돌아가기</a>';
+    //header("Location: login.php");
+
+  }
+ ?>
+
 <!DOCTYPE HTML>
 <html>
   <HEAD>
@@ -25,7 +41,7 @@
     -->
     <div class="container">
       <p><h3>회원가입 페이지</h3></p>
-      <form action="join_process.php" method="post">
+      <form action="" method="post">
         <div class="form-group">
           <label for="id">아이디</label>
           <input class="form-control" type="text" name="id" placeholder="아이디를 입력해주세요" required name='id'>
@@ -51,9 +67,9 @@
         <div class="form-group">
           <label for="major">전공</label>
           <select class="form-control" id="major" name='major'>
-            <option value='000'>컴퓨터공학부</option>
-            <option value='001'>소프트웨어전공</option>
-            <option value='002'>소프트웨어학부</option>
+            <option value='0'>컴퓨터공학부</option>
+            <option value='1'>소프트웨어전공</option>
+            <option value='2'>소프트웨어학부</option>
           </select>
         </div>
         <div class="form-group">
