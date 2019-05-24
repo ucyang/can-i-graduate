@@ -7,6 +7,15 @@ FLUSH PRIVILEGES;
 
 USE can_i_graduate;
 
+CREATE TABLE majors(
+   major_srl BIGINT(11) NOT NULL AUTO_INCREMENT,
+   dept NVARCHAR(80) NOT NULL,
+   name NVARCHAR(80) NOT NULL,
+
+   PRIMARY KEY(major_srl),
+   UNIQUE(name)
+);
+
 CREATE TABLE members(
    member_srl BIGINT(11) NOT NULL AUTO_INCREMENT,
    user_id VARCHAR(80) NOT NULL,
@@ -21,16 +30,8 @@ CREATE TABLE members(
    PRIMARY KEY(member_srl),
    UNIQUE(user_id),
    UNIQUE(nickname),
-   UNIQUE(email)
-);
-
-CREATE TABLE majors(
-   major_srl BIGINT(11) NOT NULL AUTO_INCREMENT,
-   dept NVARCHAR(80) NOT NULL,
-   name NVARCHAR(80) NOT NULL,
-
-   PRIMARY KEY(major_srl),
-   UNIQUE(name)
+   UNIQUE(email),
+   FOREIGN KEY(major_srl) REFERENCES majors(major_srl)
 );
 
 CREATE TABLE lectures(
@@ -59,7 +60,9 @@ CREATE TABLE attended_lectures(
    grade NVARCHAR(40) NOT NULL,
    codeshare CHAR(1),
 
-   PRIMARY KEY(member_srl, lecture_srl)
+   PRIMARY KEY(member_srl, lecture_srl),
+   FOREIGN KEY(member_srl) REFERENCES members(member_srl),
+   FOREIGN KEY(lecture_srl) REFERENCES lectures(lecture_srl)
 );
 
 CREATE TABLE graduation_status(
@@ -72,11 +75,16 @@ CREATE TABLE graduation_status(
    paper CHAR(1) DEFAULT 'N',
    counseling CHAR(1) DEFAULT 'N',
    portfolio CHAR(1) DEFAULT 'N',
-   coding_boot_camp CHAR(1) DEFAULT 'N',
-   topcit CHAR(1) DEFAULT 'N',
-   open_source CHAR(1) DEFAULT 'N',
+   coding_boot_camp CHAR(1),
+   topcit CHAR(1),
+   open_source CHAR(1),
 
-   PRIMARY KEY(member_srl)
+   PRIMARY KEY(member_srl),
+   FOREIGN KEY(member_srl) REFERENCES members(member_srl)
 );
 
-INSERT INTO members (user_id, password) VALUES ('admin', 'admin');
+insert into majors (dept) values ('admin');
+insert into majors (dept, name) values ('000', '컴퓨터공학부');
+insert into majors (dept, name) values ('001', '소프트웨어전공');
+insert into majors (dept, name) values ('002', '소프트웨어학부');
+insert into members (user_id, password, major_srl) values ('admin', 'admin', 1);

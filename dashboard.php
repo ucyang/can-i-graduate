@@ -17,28 +17,17 @@
 		$json_data = file_get_contents($json_string);
 		$lecture = json_decode($json_data, true);
 		foreach ($lecture[selectSust] as $record){ // $arr as $k=>$v
-			echo $record[pobtnm];
-			$sql = "INSERT INTO lectures (course_no,class_no,year,password,major_srl,admission_year,campus,abeek) VALUES 
-		('{$_POST[id]}','{$_POST[nickname]}','{$_POST[email]}','$encryped_password', {$_POST[major]},
-		{$_POST[admission_year]},'{$_POST[campus]}','{$_POST[abeek]}')";
-			
-		
-		}			
+			// [remk](비고), [pnt](학점-시간) parsing 필요.
+			// clssnmlk, profnmlk는 classnm, profnm과 중복됨.
+			// 'seoul', 'cau' 부분도 참조 가능하지만 놔둠.
+			echo $record[clssnm];
+			$sql = "INSERT INTO lectures (course_no, class_no, year, semester, campus, 
+			college, dept, title, inst_name, credit, course_class, course_type, abeek_type) VALUES 
+			($record[sbjtno], $record[clssno], $record[shyr], $record[shyr2], 'seoul', 
+			'cau', $record[colgnm], $record[clssnm], $record[profnm], 3, $record[sustnm], $record[pobtnm], $record[remk])";
+		}
 		
 		/*
-		foreach ($rows as $row) {
-			print "<tr><td>$row[0]</td><td>$row[1]</td></tr>";
-		$categories = array('교직', '핵심교양', '전공필수');
-			if(in_array($_POST['category'], $categories)){
-		foreach ($rows as $row) {
-			print "<tr><td>$row[0]</td><td>$row[1]</td></tr>";
-			
-		try {
-			$db = new PDO("mysql:host='127.0.0.1';dbname='can_i_graduate'", 'cig_admin', '1');
-		} catch (Exception $e) {
-			$e->getMessage();
-			exit();
-		}
 		$fh = fopen($target_file, 'rb');
 		$stmt = $db->prepare('INSERT INTO lectures ())
 		

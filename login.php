@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if(array_key_exists('user_id', $_SESSION)) Header("Location:./dashboard.php");
+	//if(array_key_exists('user_id', $_SESSION)) Header("Location:./dashboard.php");
 	
 	if($_POST[id] != '' && $_POST[password] != ''){
 		
