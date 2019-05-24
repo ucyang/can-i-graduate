@@ -67,9 +67,9 @@
         <div class="form-group">
           <label for="major">전공</label>
           <select class="form-control" id="major" name='major'>
-            <option value='0'>컴퓨터공학부</option>
-            <option value='1'>소프트웨어전공</option>
-            <option value='2'>소프트웨어학부</option>
+            <option value='1'>컴퓨터공학부</option>
+            <option value='2'>소프트웨어전공</option>
+            <option value='3'>소프트웨어학부</option>
           </select>
         </div>
         <div class="form-group">
