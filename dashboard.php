@@ -12,6 +12,7 @@
 	- class 마다 parsing 한 후 제공함
 	
 	*/
+	
 	if($_SESSION['user_id']=='admin'){ // []. () : function
 		$json_string = './2018_1_UC_SC_ICT_CE.json';
 		$json_data = file_get_contents($json_string);
@@ -26,18 +27,6 @@
 			($record[sbjtno], $record[clssno], $record[shyr], $record[shyr2], 'seoul', 
 			'cau', $record[colgnm], $record[clssnm], $record[profnm], 3, $record[sustnm], $record[pobtnm], $record[remk])";
 		}
-		
-		/*
-		$fh = fopen($target_file, 'rb');
-		$stmt = $db->prepare('INSERT INTO lectures ())
-		
-		$conn = mysqli_connect('127.0.0.1','cig_admin','1','can_i_graduate');
-		$loginSql = "SELECT * FROM attended_lectures WHERE user_id='$_SESSION[user_id]' AND ";
-		$loginSqlResult = mysqli_query($conn,$loginSql);
-		mysqli_close($conn);
-		
-		$memberInfoArr = mysqli_fetch_array($loginSqlResult);
-		*/
 	}
 	/*	사용자인 경우
 	
@@ -48,6 +37,7 @@
 	
 	*/
 	else{
+		
 		// 성적 올리기
 		
 print <<<_HTML_
@@ -56,7 +46,6 @@ print <<<_HTML_
 		<input type="submit" value="Upload" name="submit">
 	</form>
 _HTML_;
-
 		
 		$target_dir = "/workspace/PHP/";
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -82,12 +71,47 @@ _HTML_;
 				}
 			}
 		}
-		// 보관 성적 자동 불러오기, 계산하기
+		
 		// detailPage로 넘어가기
-		// logOut 하기
-		// 회원 가입 중 취소, 회원 정보 수정, 회원 탈퇴 회원탈퇴 시 쿠키 처리
-		// unset($_SESSION['user_id']);*/
+		
+print <<<_HTML_
+	<form method="post" action="detailPage.php">
+		<button type="submit">세부 조회</button>
+	</form>
+_HTML_;
+
+		// 보관 성적 자동 '갱신'하기, 종합지표 계산하기
+		
+		$row = 1;
+		if (($handle = fopen($target_file, "r")) !== FALSE) {
+  			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    			$num = count($data);
+    			echo "<p> $num fields in line $row: <br /></p>\n";
+    			$row++;
+    			for ($c=0; $c < $num; $c++) {
+        			echo $data[$c] . "<br />\n";
+    			}
+  			}
+  			fclose($handle);
+		}
+		
+		// 회원 정보 수정, 회원 탈퇴(쿠키 처리)
+		
+print <<<_HTML_
+	<form method="post" action="reLog.php">
+		<button type="submit">회원 정보 수정</button>
+	</form>
+_HTML_;
+	
 	}
-	//require 'dashboard_view.php';
+
+	// logOut 하기
+print <<<_HTML_
+	<form method="post" action="logOut.php">
+		<button type="submit">나가기</button>
+	</form>
+_HTML_;
+
+	require 'dashboard_view.php';
 	mysqli_close($conn);
 ?>

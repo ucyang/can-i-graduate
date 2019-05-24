@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	//if(array_key_exists('user_id', $_SESSION)) Header("Location:./dashboard.php");
+	if(array_key_exists('user_id', $_SESSION)) Header("Location:./dashboard.php");
 	
 	if($_POST[password] != ''){
 		$encryped_password = password_hash($_POST[password], PASSWORD_DEFAULT);
@@ -17,6 +17,6 @@
 			Header("Location:./login.php");
 		}
 	}
-	
+	// 회원 가입 중 취소 
 	require 'join.html';
 ?>
