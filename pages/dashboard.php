@@ -14,7 +14,7 @@
 	*/
 	
 	if($_SESSION['user_id']=='admin'){ // []. () : function
-		$json_string = './2018_1_UC_SC_ICT_CE.json';
+		$json_string = '../tmp/2018_1_UC_SC_ICT_CE.json';
 		$json_data = file_get_contents($json_string);
 		$lecture = json_decode($json_data, true);
 		foreach ($lecture[selectSust] as $record){ // $arr as $k=>$v
