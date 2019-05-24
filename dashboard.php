@@ -102,7 +102,8 @@ print <<<_HTML_
 		<button type="submit">회원 정보 수정</button>
 	</form>
 _HTML_;
-	
+		
+		require 'dashboard_view.php';
 	}
 
 	// logOut 하기
@@ -112,6 +113,5 @@ print <<<_HTML_
 	</form>
 _HTML_;
 
-	require 'dashboard_view.php';
 	mysqli_close($conn);
 ?>
