@@ -1,5 +1,4 @@
 <?php
-	// 실제 등록 시에만 자동 증가하게
 	session_start();
 	if(array_key_exists('user_id', $_SESSION)) Header("Location:./dashboard.php");
 	
@@ -15,10 +14,9 @@
 			echo "회원 가입 오류 : " . mysqli_error($conn);
 		} else {
 			mysqli_close($conn);
-			Header("Location:./login.php"); // 회원 가입 완료
+			Header("Location:./login.php");
 		}
 	}
-
-	// require 'join_view.php;
+	
 	require 'join.html';
 ?>
