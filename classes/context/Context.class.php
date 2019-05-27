@@ -7,11 +7,12 @@ class Context
     public static $DBInfo = NULL;
     public static $isLogged = false;
     protected static $DBFilename = 'config/db.config.php';
-
+    static $act;
     public static function init()
     {
         // Load DB configuration.
         self::loadDBInfo();
+        self::parseUrl();
         // Start session
         session_start();
         // Start output buffer
@@ -35,5 +36,13 @@ class Context
     {
         session_write_close();
         ob_end_flush();
+    }
+
+    public static function parseUrl(){
+      if(!isset($_GET['act'])){
+        Context::$act = 'login';
+      }else{
+        Context::$act = $_GET['act'];
+      }
     }
 }
