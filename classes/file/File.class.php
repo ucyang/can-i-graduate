@@ -4,5 +4,5 @@
  */
 class File
 {
-    static public $file = NULL;
+    public static $file = NULL;
 }

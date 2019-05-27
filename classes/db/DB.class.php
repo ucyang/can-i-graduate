@@ -4,5 +4,5 @@
  */
 class DB
 {
-    static public $db = NULL;
+    public static $db = NULL;
 }

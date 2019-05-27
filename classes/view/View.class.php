@@ -4,5 +4,20 @@
  */
 class View
 {
-    static public $view = NULL;
+    public static $view = NULL;
+
+    public static function init()
+    {
+        
+    }
+
+    public static function displayContent()
+    {
+        
+    }
+
+    public static function close()
+    {
+        
+    }
 }

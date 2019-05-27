@@ -4,5 +4,5 @@
  */
 class User
 {
-    static public $user  = NULL;
+    public static $user = NULL;
 }
