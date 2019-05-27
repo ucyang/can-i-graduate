@@ -1,3 +1,4 @@
+
 <?php
 /**
  * @brief Declare constants for generic use and for checking to avoid a direct call from the Web
@@ -27,3 +28,9 @@ else
 
 /* End of file index.php */
 /* Location: ./index.php *
+
+
+<?php
+include "login.php";
+ ?>
+
