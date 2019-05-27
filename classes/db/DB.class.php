@@ -109,11 +109,13 @@ class DB
       return $arr;
     }
     public static function bindParam($arr){
-      var_dump($arr);
+
       call_user_func_array(array(DB::$stmt, 'bind_param'), $arr);
+      //echo DB::$stmt->error;
     }
     public static function execute(){
       DB::$stmt->execute();
-      echo DB::$stmt->error;
+
+      //echo DB::$stmt->error;
     }
 }

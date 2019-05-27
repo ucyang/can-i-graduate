@@ -5,7 +5,26 @@
 	if(isset($_POST['password'])){
 		$encryped_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-		$conn = mysqli_connect('127.0.0.1','cig_admin','1','can_i_graduate');
+		DB::connectDB();
+		$arr = [
+			'dept'=>$_POST['major']
+		];
+
+		$select_major_srl = DB::select('majors', 'major_srl',$arr);
+		$insert=[
+			'user_id' => $_POST['id'],
+			'nickname'=>$_POST['nickname'],
+			'email'=> $_POST['email'],
+			'password'=>$encryped_password,
+			'major_srl'=> $select_major_srl[0]['major_srl'],
+			'admission_year'=>$_POST['admission_year'],
+			'campus'=>$_POST['campus'],
+			'abeek'=>$_POST['abeek']
+		];
+		DB::insertPrepare('members',$insert);
+		DB::bindParam(["ssssiiss"]+$insert);
+		DB::execute();
+		/*
 		$joinSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,campus,abeek) VALUES
 		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', (SELECT major_srl FROM majors
 		WHERE dept = '{$_POST['major']}'), {$_POST['admission_year']},'{$_POST['campus']}','{$_POST['abeek']}')";
@@ -15,7 +34,7 @@
 		} else {
 			mysqli_close($conn);
 			Header("Location:/?act=login");
-		}
+		}*/
 	}
 	// 회원 가입 중 취소
 
