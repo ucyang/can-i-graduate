@@ -18,6 +18,12 @@ class DB
       self::connectDB();
     }
 
+    public static function close()
+    {
+      // Disconnect DB.
+      self::disconnectDB();
+    }
+
     public static function loadDBInfo()
     {
         /**
@@ -38,6 +44,11 @@ class DB
       if(self::$conn->connect_error){
         die("Connection failed: " . $conn->connect_error);
       }
+    }
+
+    public static function disconnectDB()
+    {
+      self::$conn->close();
     }
 
     public static function getConn()
