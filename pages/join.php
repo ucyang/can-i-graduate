@@ -2,39 +2,39 @@
 
 	if(array_key_exists('user_id', $_SESSION)) Header("Location:/?act=dashboard");
 
-	if(isset($_POST['password'])){
+	if(isset($_POST['password']))
+	{
 		$encryped_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		echo $_POST['major'];
+		//get major_srl from db
+		$selectSql = "SELECT major_srl FROM majors WHERE name = '{$_POST['major']}'";
+		$sqlResult = DB::getConn()->query($selectSql);
+		if ($sqlResult == TRUE)
+		{
+			$select_major_srl = $sqlResult->fetch_assoc();
+		}
+		else
+		{
+			//select fail
+		    echo "Error: ".DB::getConn()->error;
+		}
+		var_dump($select_major_srl);
+		echo $select_major_srl['major_srl'];
+		//insert user info to db
+		$insertSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,campus,abeek) VALUES
+		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', {$select_major_srl['major_srl']} , {$_POST['admission_year']},'{$_POST['campus']}','{$_POST['abeek']}')";
 
-		DB::connectDB();
-		$arr = [
-			'dept'=>$_POST['major']
-		];
+		if (DB::getConn()->query($insertSql) === TRUE)
+		{
+			//insert success
+	    echo "New record created successfully";
+		}
+		else
+		{
+			//insert fail
+		    echo "Error: " . DB::getConn()->error;
+		}
 
-		$select_major_srl = DB::select('majors', 'major_srl',$arr);
-		$insert=[
-			'user_id' => $_POST['id'],
-			'nickname'=>$_POST['nickname'],
-			'email'=> $_POST['email'],
-			'password'=>$encryped_password,
-			'major_srl'=> $select_major_srl[0]['major_srl'],
-			'admission_year'=>$_POST['admission_year'],
-			'campus'=>$_POST['campus'],
-			'abeek'=>$_POST['abeek']
-		];
-		DB::insertPrepare('members',$insert);
-		DB::bindParam(["ssssiiss"]+$insert);
-		DB::execute();
-		/*
-		$joinSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,campus,abeek) VALUES
-		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', (SELECT major_srl FROM majors
-		WHERE dept = '{$_POST['major']}'), {$_POST['admission_year']},'{$_POST['campus']}','{$_POST['abeek']}')";
-
-		if(mysqli_query($conn,$joinSql)===false){
-			echo "회원 가입 오류 : " . mysqli_error($conn);
-		} else {
-			mysqli_close($conn);
-			Header("Location:/?act=login");
-		}*/
 	}
 	// 회원 가입 중 취소
 
@@ -89,9 +89,9 @@
         <div class="form-group">
           <label for="major">전공</label>
           <select class="form-control" id="major" name='major'>
-            <option value='000'>컴퓨터공학부</option>
-            <option value='001'>소프트웨어전공</option>
-            <option value='002'>소프트웨어학부</option>
+            <option value='컴퓨터공학부'>컴퓨터공학부</option>
+            <option value='컴퓨터공학부'>소프트웨어전공</option>
+            <option value='컴퓨터공학부'>소프트웨어학부</option>
           </select>
         </div>
         <div class="form-group">
