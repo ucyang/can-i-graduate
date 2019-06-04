@@ -5,7 +5,7 @@
  */
 class View
 {
-    static public $view = NULL;
+    public static $view = NULL;
 
 
     public static function init()

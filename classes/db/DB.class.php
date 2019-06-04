@@ -4,24 +4,36 @@
  */
 class DB
 {
-    static public $db = NULL;
-
     //db 정보
-    private static $db_info=[
-      'host' => '127.0.0.1',
-      'id' => 'cig_admin',
-      'password'=> '1',
-      'dbName'=>'can_i_graduate'
-    ];
+    public static $DBInfo = NULL;
+    protected static $DBFilename = 'config/db.config.php';
     //db 연결 변수
-    static $conn;
-    static $stmt;
+    protected static $conn;
+    protected static $stmt;
 
+    public static function init()
+    {
+      // Load DB configuration.
+      self::loadDBInfo();
+    }
+
+    public static function loadDBInfo()
+    {
+        /**
+         * @brief Include basic configuration file
+        **/
+        if (file_exists(CIG_BASEDIR . self::$DBFilename))
+        {
+            ob_start();
+            self::$DBInfo = require CIG_BASEDIR . self::$DBFilename;
+            ob_end_clean();
+        }
+    }
 
     public static function connectDB(){
       //후에 context 안에 들어가 있는 정보로 대체
-      DB::$conn = new mysqli(DB::$db_info['host'],DB::$db_info['id'],DB::$db_info['password'],DB::$db_info['dbName']);
-      if(DB::$conn->connect_error){
+      self::$conn = new mysqli(self::$DBInfo['db_hostname'],self::$DBInfo['db_userid'],self::$DBInfo['db_password'],self::$DBInfo['db_database']);
+      if(self::$conn->connect_error){
         die("Connection failed: " . $conn->connect_error);
       }
     }
@@ -49,10 +61,10 @@ class DB
       }
       $sql = $sql.")";
 
-      if (DB::$conn->query($sql) === TRUE) {
+      if (self::$conn->query($sql) === TRUE) {
         echo "insert successfully";
       } else {
-        echo "Error: " . $sql . "<br>" . DB::$conn->error;
+        echo "Error: " . $sql . "<br>" . self::$conn->error;
       }
     }
 
@@ -72,9 +84,9 @@ class DB
         if( $key != $last_key ) $sql = $sql .', ';
       }
       $sql = $sql.")";
-      DB::$stmt =DB::$conn->prepare($sql);
-      if(DB::$stmt==false){
-        die('prepare() failed: ' . htmlspecialchars(DB::$conn->error));
+      self::$stmt =self::$conn->prepare($sql);
+      if(self::$stmt==false){
+        die('prepare() failed: ' . htmlspecialchars(self::$conn->error));
       }else{
         echo "prepare 성공";
       }
@@ -96,11 +108,11 @@ class DB
       foreach($conditions as $key=>$value){
         $sql = $sql." $key=$value ";
       }
-      $result=DB::$conn->query($sql);
+      $result=self::$conn->query($sql);
       if ($result == TRUE) {
         echo "select successfully<br>";
       } else {
-        echo "Error: " . $sql . "<br>" . DB::$conn->error;
+        echo "Error: " . $sql . "<br>" . self::$conn->error;
       }
 
       while($row = $result->fetch_assoc()){
@@ -110,12 +122,12 @@ class DB
     }
     public static function bindParam($arr){
 
-      call_user_func_array(array(DB::$stmt, 'bind_param'), $arr);
-      //echo DB::$stmt->error;
+      call_user_func_array(array(self::$stmt, 'bind_param'), $arr);
+      //echo self::$stmt->error;
     }
     public static function execute(){
-      DB::$stmt->execute();
+      self::$stmt->execute();
 
-      //echo DB::$stmt->error;
+      //echo self::$stmt->error;
     }
 }
