@@ -57,7 +57,7 @@
                      'width': 450,
                      'height': 450,
                      'chartArea': {'width': '100%', 'height': '80%'},
-                     'pieHole':0.4, 
+                     'pieHole':0.4,
                      'pieStartAngle': 270,
                      'slices':{
                        '2':{
@@ -84,7 +84,7 @@
                      'width': 450,
                      'height': 450,
                      'chartArea': {'width': '100%', 'height': '80%'},
-                     'pieHole':0.4, 
+                     'pieHole':0.4,
                      'pieStartAngle': 270,
                      'slices':{
                        '2':{
@@ -109,6 +109,9 @@
       height:700px;
       width:120%;
     }
+    .greeting{
+      margin-left: auto;
+    }
     @media screen and (max-width:760px) {
       #table-row{
         top: auto;
@@ -124,12 +127,21 @@
   </style>
 </head>
 <body>
-  <div class="navbar bg-light">
+  <div class="navbar bg-light navbar-expand-sm">
     <!--로고-->
     <a href="#" class="navbar-brand">Can I graduate</a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/?act=detailPage">세부 정보 페이지</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/?act=logOut">로그아웃</a>
+      </li>
+    </ul>
     <!--~님 안녕하세요-->
     <div class="greeting">                             <!--php로 구현해야 할 것들: 사용자의 이름(name)-->
-      (php변수)님 안녕하세요                                                    
+      <?php echo $_SESSION['nickname'] ?>님 안녕하세요
     </div>
   </div>
   <div class="container">
