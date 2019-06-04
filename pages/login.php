@@ -24,8 +24,8 @@
 			$memberInfoArr = mysqli_fetch_array($loginSqlResult);
 			if($memberInfoArr['user_id']!='' && password_verify($password, $memberInfoArr['password'])){
 				//session에 member_srl만 저장하도록 바꾸기
-				$_SESSION['user_id'] = $memberInfoArr['user_id'];
-				$_SESSION['nickname'] = $memberInfoArr['nickname'];
+				$_SESSION['user_srl'] = $memberInfoArr['user_srl'];
+				
 				Header("Location: /?act=dashboard");
 			} else {
 				echo "다시 로그인하세요.";
