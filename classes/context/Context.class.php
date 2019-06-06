@@ -23,6 +23,7 @@ class Context
     {
         session_write_close();
         ob_end_flush();
+        DB::close();
     }
 
     public static function parseUrl(){
