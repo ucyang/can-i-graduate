@@ -1,6 +1,6 @@
 <?php
 
-	if(! array_key_exists('user_id', $_SESSION)) Header("Location:/?act=login");
+	if(! array_key_exists('user_srl', $_SESSION)) Header("Location:/?act=login");
 
 	$conn = mysqli_connect('127.0.0.1','cig_admin','1','can_i_graduate');
 
@@ -12,8 +12,16 @@
 	- class 마다 parsing 한 후 제공함
 
 	*/
+	$sql = "SELECT user_id FROM members where member_srl = '{$_SESSION['user_srl']}'";
+	$sqlResult = DB::getConn()->query($sql);
+	if($sqlResult==false){
+		echo "ERROR : ". DB::getConn()->error;
+	}else{
+		$memberinfo = $sqlResult->fetch_assoc();
 
-	if($_SESSION['user_id']=='admin'){ // []. () : function
+	}
+
+	if($memberinfo['user_id']=='admin'){ // []. () : function
 		$json_string = '../tmp/2018_1_UC_SC_ICT_CE.json';
 		$json_data = file_get_contents($json_string);
 		$lecture = json_decode($json_data, true);

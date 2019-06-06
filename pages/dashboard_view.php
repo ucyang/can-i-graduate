@@ -137,14 +137,26 @@
       <li class="nav-item">
         <a class="nav-link" href="/?act=detailPage">세부 정보 페이지</a>
       </li>
-      
+
       <li class="nav-item">
         <a class="nav-link" href="/?act=logOut">로그아웃</a>
       </li>
     </ul>
     <!--~님 안녕하세요-->
     <div class="greeting">                             <!--php로 구현해야 할 것들: 사용자의 이름(name)-->
-      <?php echo $_SESSION['nickname'] ?>님 안녕하세요
+      <?php
+      $sql = "SELECT nickname FROM members where member_srl = {$_SESSION['user_srl']}";
+    	$sqlResult = DB::getConn()->query($sql);
+    	if($sqlResult==false){
+    		echo "ERROR : ". DB::getConn()->error;
+    	}else{
+    		$memberinfo = $sqlResult->fetch_assoc();
+        
+    	}
+
+      echo $memberinfo['nickname'];
+
+       ?>님 안녕하세요
     </div>
   </div>
   <div class="container">
