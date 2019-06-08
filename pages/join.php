@@ -4,20 +4,22 @@
 	if(isset($_POST['password']))
 	{
 		$encryped_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-		echo $_POST['major'];
+
 		//get major_srl from db
 		$selectSql = "SELECT major_srl FROM majors WHERE name = '{$_POST['major']}'";
 		$sqlResult = DB::getConn()->query($selectSql);
-		if ($sqlResult == TRUE)
+		if ($sqlResult)
 		{
+
 			$select_major_srl = $sqlResult->fetch_assoc();
+			var_dump($select_major_srl);
 		}
 		else
 		{
 			//select fail
 		    echo "Error: ".DB::getConn()->error;
 		}
-		var_dump($select_major_srl);
+
 		echo $select_major_srl['major_srl'];
 		//insert user info to db
 		$insertSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,campus,abeek) VALUES
@@ -92,8 +94,8 @@
           <label for="major">전공</label>
           <select class="form-control" id="major" name='major'>
             <option value='컴퓨터공학부'>컴퓨터공학부</option>
-            <option value='컴퓨터공학부'>소프트웨어전공</option>
-            <option value='컴퓨터공학부'>소프트웨어학부</option>
+            <option value='소프트웨어전공'>소프트웨어전공</option>
+            <option value='소프트웨어학부'>소프트웨어학부</option>
           </select>
         </div>
         <div class="form-group">
