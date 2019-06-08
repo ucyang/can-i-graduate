@@ -172,7 +172,7 @@
             <thead class="thead-light">
 
               <tr>
-                <th>체크박스</th>
+                <th>번호</th>
                 <th>학점</th>
                 <th>과목 이름</th>
                 <th>과목 번호</th>
@@ -226,21 +226,23 @@
             </tr>
           </thead>
           <?php
-          $sql = "SELECT * FROM attended_lectures WHERE member_srl = {$_SESSION['user_srl']}";
-          $lectures = DB::getConn()->query($sql)->fetch_all(MYSQLI_ASSOC);
-
-
-          for($i=0; $i<count($lectures);$i++)
-          {
+          User::getattendedLectures();
+          echo User::$admission_year."<br>";
+          /*
+          echo '<pre>';
+          var_dump(User::$attended_lectures);
+          echo '</pre>';
+          */
+          for($j = 0; $j<count(User::$attended_lectures);$j++){
             echo "<tr class='lectures'>";
-            echo "<td><input id='{$lectures[$i]['course_no']}' name='{$lectures[$i]['course_no']}' type='checkbox' value=''></td>";
-            echo "<td><input type='text' onchange='writeCredit(this, {$lectures[$i]['course_no']})'></td>";
-            echo "<td class='title'>{$lectures[$i]['title']}</td>";
-            echo "<td class='course_no'>{$lectures[$i]['course_no']}</td>";
-            echo "<td class='college'>{$lectures[$i]['college']}</td>";
-            echo "<td class='dept'>{$lectures[$i]['dept']}</td>";
-            echo "<td class='course_type'>{$lectures[$i]['course_type']}</td>";
-            echo "<td class='abeek_type'>{$lectures[$i]['abeek_type']}</td>";
+            echo "<td>$j</td>";
+            echo "<td><input type='text' value='".User::$attended_lectures[$j]['grade']."' disabled></td>";
+            echo "<td class='title'>".User::$attended_lectures[$j]['title']."</td>";
+            echo "<td class='course_no'>".User::$attended_lectures[$j]['course_no']."</td>";
+            echo "<td class='college'>".User::$attended_lectures[$j]['college']."</td>";
+            echo "<td class='dept'>".User::$attended_lectures[$j]['dept']."</td>";
+            echo "<td class='course_type'>".User::$attended_lectures[$j]['course_type']."</td>";
+            echo "<td class='abeek_type'>".User::$attended_lectures[$j]['abeek_type']."</td>";
 
             echo "</tr>";
           }
