@@ -254,7 +254,7 @@
       <!--save_file.php로 보낸다.-->
       <div class="file_upload container">
         <h3>파일 업로드</h3>
-        <form  action="save_file.php" method="post">
+        <form enctype='multipart/form-data' action="?act=save_file" method="post">
           <div class="form-group row">
             <div class="col-3">
               <input type="file" class="form-control-file border" name="file">
