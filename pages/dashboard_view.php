@@ -135,7 +135,7 @@
     <a href="#" class="navbar-brand">Can I graduate</a>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/?act=detailPage">세부 정보 페이지</a>
+        <a class="nav-link" href="/?act=detail">세부 정보 페이지</a>
       </li>
 
       <li class="nav-item">
@@ -145,7 +145,7 @@
     <!--~님 안녕하세요-->
     <div class="greeting">                             <!--php로 구현해야 할 것들: 사용자의 이름(name)-->
       <?php
-      
+
 
       echo $memberinfo['nickname'];
 
