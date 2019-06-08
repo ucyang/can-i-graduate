@@ -21,6 +21,105 @@
       margin-left: auto;
     }
     </style>
+    <script type="text/javascript">
+      function searchWithName()
+      {
+        var searchBox = document.getElementById('searchBox');
+        var lectures = document.getElementsByClassName('lectures');
+        reg = new RegExp(searchBox.value);
+        for( var i = 0; i<lectures.length;i++)
+        {
+
+          if(searchBox.value !="")
+          {
+            console.log("안");
+            var remarks = lectures[i].getElementsByClassName('title')[0].innerHTML;
+            if(reg.test(remarks)==false)
+            {
+              console.log(searchBox.value);
+              lectures[i].style.display='none';
+            }
+
+          }
+          else
+          {
+            lectures[i].style.display='table-row';
+          }
+        }
+
+      }
+      function search()
+      {
+
+        var majorCheckbox = document.getElementById('majorCheckbox');
+        var generalCheckbox = document.getElementById('generalCheckbox');
+        var lectures = document.getElementsByClassName('lectures');
+        console.log(majorCheckbox);
+        console.log(generalCheckbox);
+        if(majorCheckbox.checked ==false && generalCheckbox.checked ==false)
+        {
+          console.log('ff');
+          for( var i = 0; i<lectures.length;i++)
+          {
+
+            lectures[i].style.display='table-row';
+
+          }
+        }
+        else if(majorCheckbox.checked ==true && generalCheckbox.checked ==false)
+        {
+          console.log('tf');
+          for( var i = 0; i<lectures.length;i++)
+          {
+            var remarks = lectures[i].getElementsByClassName('abeek_type')[0].innerHTML;
+
+            if(/교양/.test(remarks)==true || /MACH/.test(remarks)==true)
+            {
+              console.log(remarks);
+              lectures[i].style.display='none';
+            }
+            else
+            {
+              lectures[i].style.display='table-row';
+            }
+          }
+        }
+        else if(majorCheckbox.checked ==false && generalCheckbox.checked == true)
+        {
+          console.log('ft');
+          for( var i = 0; i<lectures.length;i++)
+          {
+            var remarks = lectures[i].getElementsByClassName('abeek_type')[0].innerHTML;
+
+            if(/교양/.test(remarks)==true || /MACH/.test(remarks)==true)
+            {
+              console.log(remarks);
+              lectures[i].style.display='table-row';
+            }
+            else
+            {
+              lectures[i].style.display='none';
+            }
+          }
+        }
+        else
+        {
+          console.log('tt');
+          for( var i = 0; i<lectures.length;i++)
+          {
+              lectures[i].style.display='table-row';
+          }
+        }
+
+
+      }
+      function writeCredit(textInput,lecture_srl)
+      {
+        console.log(textInput.value);
+        document.getElementById(lecture_srl).value = textInput.value;
+      }
+
+    </script>
   </head>
   <body>
     <div class="navbar bg-light navbar-expand-sm">
@@ -28,16 +127,16 @@
       <a href="#" class="navbar-brand">Can I graduate</a>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/?act=detailPage">세부 정보 페이지</a>
+          <a class="nav-link" href="/?act=dashboard">대시보드</a>
         </li>
-        
+
         <li class="nav-item">
-          <a class="nav-link" href="/?act=logOut">로그아웃</a>
+          <a class="nav-link" href="/?act=logout">로그아웃</a>
         </li>
       </ul>
       <!--~님 안녕하세요-->
       <div class="greeting">
-        <?php echo $_SESSION['nickname'] ?>님 안녕하세요
+        <?php   echo $memberinfo['nickname']; ?>님 안녕하세요
       </div>
     </div>
     <div class="container">
@@ -47,83 +146,64 @@
           <div class="col-3">
             <div class="form-check-inline">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="major">전공
+                <input id='majorCheckbox' type="checkbox" class="form-check-input" value="major" onclick='search()'>전공
               </label>
             </div>
             <div class="form-check-inline">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" value="general">교양
+                <input id='generalCheckbox' type="checkbox" class="form-check-input" value="general" onclick='search()'>교양
               </label>
             </div>
           </div>
           <div class="col-4">
           </div>
           <div class="col-5 d-flex justify-content-end">
-            <input type="text">
-            <button class="btn btn-primary" onclick="search()">검색</button>
+            <input id='searchBox' type="text">
+            <button class="btn btn-primary" onclick="searchWithName()">검색</button>
           </div>
-          <div class="row">
-            <h3>체크박스 선택, 검색하면 해당 과목만 보여주는 것 구현 필요</h3>
-          </div>
+
         </div>
       </div>
       <!--전체 과목들 중에서 내가 들은 과목 골라서 저장하기-->
       <!--input type checkbox에 체크된 것들이 save_classes.php로 넘어간다-->
       <div class="table-responsive">
-        <form  action="save_classes.php" method="post">
-          <table class="table">
+        <form  action="?act=save_lectures" method="post">
+          <table class="table" overflow="auto" >
             <thead class="thead-light">
+
               <tr>
                 <th>체크박스</th>
+                <th>학점</th>
                 <th>과목 이름</th>
                 <th>과목 번호</th>
-                <th>학년</th>
-                <th>조건1</th>
-                <th>조건2</th>
-                <th>조건3</th>
-                <th>조건4</th>
+                <th>대학</th>
+                <th>학부</th>
+                <th>분류</th>
+                <th>비고</th>
               </tr>
             </thead>
-            <tr>
-              <td><input name="class_id1" type="checkbox"></td>
-              <td>과목1</td>
-              <td>00000</td>
-              <td>1</td>
-              <td>값1</td>
-              <td>값2</td>
-              <td>값3</td>
-              <td>값4</td>
-            </tr>
-            <tr>
-              <td><input name="class_id1" type="checkbox"></td>
-              <td>과목1</td>
-              <td>00000</td>
-              <td>1</td>
-              <td>값1</td>
-              <td>값2</td>
-              <td>값3</td>
-              <td>값4</td>
-            </tr>
-            <tr>
-              <td><input name="class_id1" type="checkbox"></td>
-              <td>과목1</td>
-              <td>00000</td>
-              <td>1</td>
-              <td>값1</td>
-              <td>값2</td>
-              <td>값3</td>
-              <td>값4</td>
-            </tr>
-            <tr>
-              <td><input name="class_id1" type="checkbox"></td>
-              <td>과목1</td>
-              <td>00000</td>
-              <td>1</td>
-              <td>값1</td>
-              <td>값2</td>
-              <td>값3</td>
-              <td>값4</td>
-            </tr>
+            <?php
+            $sql = "SELECT * FROM lectures";
+            $lectures = DB::getConn()->query($sql)->fetch_all(MYSQLI_ASSOC);
+
+
+            for($i=0; $i<count($lectures);$i++)
+            {
+              echo "<tr class='lectures'>";
+              echo "<td><input id='{$lectures[$i]['course_no']}' name='{$lectures[$i]['course_no']}' type='checkbox' value=''></td>";
+              echo "<td><input type='text' onchange='writeCredit(this, {$lectures[$i]['course_no']})'></td>";
+              echo "<td class='title'>{$lectures[$i]['title']}</td>";
+              echo "<td class='course_no'>{$lectures[$i]['course_no']}</td>";
+              echo "<td class='college'>{$lectures[$i]['college']}</td>";
+              echo "<td class='dept'>{$lectures[$i]['dept']}</td>";
+              echo "<td class='course_type'>{$lectures[$i]['course_type']}</td>";
+              echo "<td class='abeek_type'>{$lectures[$i]['abeek_type']}</td>";
+
+              echo "</tr>";
+            }
+
+             ?>
+
           </table>
           <div class="d-flex justify-content-center">
             <input type="submit" class="btn btn-light" value="저장">
@@ -135,51 +215,37 @@
         <table class="table">
           <thead class="thead-light">
             <tr>
+              <th>체크박스</th>
+              <th>학점</th>
               <th>과목 이름</th>
               <th>과목 번호</th>
-              <th>학년</th>
-              <th>조건1</th>
-              <th>조건2</th>
-              <th>조건3</th>
-              <th>조건4</th>
+              <th>대학</th>
+              <th>학부</th>
+              <th>분류</th>
+              <th>비고</th>
             </tr>
           </thead>
-          <tr>
-            <td>과목1</td>
-            <td>00000</td>
-            <td>1</td>
-            <td>값1</td>
-            <td>값2</td>
-            <td>값3</td>
-            <td>값4</td>
-          </tr>
-          <tr>
-            <td>과목1</td>
-            <td>00000</td>
-            <td>1</td>
-            <td>값1</td>
-            <td>값2</td>
-            <td>값3</td>
-            <td>값4</td>
-          </tr>
-          <tr>
-            <td>과목1</td>
-            <td>00000</td>
-            <td>1</td>
-            <td>값1</td>
-            <td>값2</td>
-            <td>값3</td>
-            <td>값4</td>
-          </tr>
-          <tr>
-            <td>과목1</td>
-            <td>00000</td>
-            <td>1</td>
-            <td>값1</td>
-            <td>값2</td>
-            <td>값3</td>
-            <td>값4</td>
-          </tr>
+          <?php
+          $sql = "SELECT * FROM attended_lectures WHERE member_srl = {$_SESSION['user_srl']}";
+          $lectures = DB::getConn()->query($sql)->fetch_all(MYSQLI_ASSOC);
+
+
+          for($i=0; $i<count($lectures);$i++)
+          {
+            echo "<tr class='lectures'>";
+            echo "<td><input id='{$lectures[$i]['course_no']}' name='{$lectures[$i]['course_no']}' type='checkbox' value=''></td>";
+            echo "<td><input type='text' onchange='writeCredit(this, {$lectures[$i]['course_no']})'></td>";
+            echo "<td class='title'>{$lectures[$i]['title']}</td>";
+            echo "<td class='course_no'>{$lectures[$i]['course_no']}</td>";
+            echo "<td class='college'>{$lectures[$i]['college']}</td>";
+            echo "<td class='dept'>{$lectures[$i]['dept']}</td>";
+            echo "<td class='course_type'>{$lectures[$i]['course_type']}</td>";
+            echo "<td class='abeek_type'>{$lectures[$i]['abeek_type']}</td>";
+
+            echo "</tr>";
+          }
+
+           ?>
         </table>
       </div>
       <!--파일 업로드 부분-->
