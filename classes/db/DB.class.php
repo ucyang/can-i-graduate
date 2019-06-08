@@ -53,6 +53,11 @@ class DB
 
     public static function getConn()
     {
-      return self::$conn;
+      if(!self::$conn){
+        echo '에러발생'. self::$conn->error;
+      }else{
+
+        return self::$conn;
+      }
     }
 }
