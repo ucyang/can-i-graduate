@@ -5,5 +5,5 @@
 
 	echo "이용해주셔서 감사합니다.";
 
-	echo '<a href="/?act=logOut">메인으로 돌아가기</a>';
+	echo '<a href="/?act=login">메인으로 돌아가기</a>';
 ?>
