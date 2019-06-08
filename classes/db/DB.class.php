@@ -39,7 +39,7 @@ class DB
 
     public static function connectDB()
     {
-      //후에 context 안에 들어가 있는 정보로 대체
+    
       self::$conn = new mysqli(self::$DBInfo['db_hostname'],self::$DBInfo['db_userid'],self::$DBInfo['db_password'],self::$DBInfo['db_database']);
       if(self::$conn->connect_error){
         die("Connection failed: " . $conn->connect_error);
