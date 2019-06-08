@@ -4,12 +4,6 @@
 
 	if(isset($_POST['id']) && isset($_POST['password'])){
 
-		if($_POST['id'] == 'admin' && $_POST['password'] == 'admin'){ // DB에서 받아오도록 수정하기
-			$_SESSION['user_id'] = 'admin';
-			$_SESSION['nickname'] = 'admin';
-			Header("Location: /?act=dashboard");
-		}
-
 		$id = $_POST['id'];
 		$password = $_POST['password'];
 
