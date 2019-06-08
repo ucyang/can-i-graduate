@@ -10,7 +10,7 @@ class File
     public static function connectFile($uploadFile)
     {
       echo 'connectFile<br>';
-
+      setlocale(LC_CTYPE, 'ko_KR.utf8');
       if(file_exists($uploadFile))
       {
         if((self::$file = fopen($uploadFile, "r"))===false){
@@ -28,21 +28,40 @@ class File
       fclose(self::$file);
     }
 
-    public static function parseFile()
+    public static function parseUploadFile()
     {
       echo 'parseFile()<br>';
       $row =1;
-      while (($data = fgetcsv(self::$file, 1000, ",")) !== FALSE)
+
+      while (($data = fgetcsv(self::$file, ",")) !== FALSE)
       {
 
-        if($row>2)
+        if($row>1)
         {
+          $class_srl=preg_replace('/[^0-9]+/', '', $data[3]);
+          $grade = preg_replace('/([^0-9\.])/', '', $data[8]);
+          var_dump($class_srl);
+          var_dump($grade);
 
-          $sql = "INSERT INTO attended_lectures(member_srl,lecture_srl, grade) VALUES ({$_SESSION['member_srl']}, $data[3], $data[5])";
-          if(DB::getConn()->query($sql) == false)
+          $sql = "SELECT lecture_srl FROM lectures WHERE course_no = '$class_srl'";
+          echo "<br>$sql<br>";
+          if($result=DB::getConn()->query($sql))
           {
-            echo "error: " . DB::getConn()->error;
+              $lectureInfo = $result->fetch_assoc();
           }
+          else
+          {
+            echo "ERROR : ", DB::getConn()->error;
+          }
+          //var_dump($result);
+
+          $sql = "INSERT INTO attended_lectures(member_srl, lecture_srl, grade) VALUES('{$_SESSION['user_srl']}', '{$lectureInfo['lecture_srl']}', '$grade')";
+          echo "<br>$sql<br>";
+          if(DB::getConn()->query($sql)==false)
+          {
+            echo "<br>ERROR : ", DB::getConn()->error;
+          }
+
         }
 
 
