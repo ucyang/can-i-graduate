@@ -10,7 +10,7 @@ class User
 
     public static $major_srl;
     public static $admission_year;
-    public static $campus;
+    // public static $campus;
 
     public static $credit; //수강 학점
 
@@ -28,7 +28,7 @@ class User
     전공, 입학년도, 캠퍼스 정보를 가져와서 저장
     */
     public static function init(){
-      $sql ="SELECT major_srl, admission_year, campus FROM members WHERE member_srl = {$_SESSION['user_srl']}";
+      $sql ="SELECT major_srl, admission_year FROM members WHERE member_srl = {$_SESSION['user_srl']}";
       $data= DB::getConn()->query($sql);
       if($data)
       {
@@ -42,7 +42,7 @@ class User
       }
       self::$admission_year = $userInfo['admission_year'];
       self::$major_srl = $userInfo['major_srl'];
-      self::$campus = $userInfo['campus'];
+      // self::$campus = $userInfo['campus'];
 
       self::$credit= array("general"=>0,"major"=>0,"free"=>0,"BSM"=>0,"design"=>0,"professional"=>0,"total"=>0);
       self::$commonLecture= array("creative"=>"N","Accounting"=>"N","korean_history"=>"N","ACT"=>"N","design"=>"N","English"=>"N", "writing"=>"N");
