@@ -122,6 +122,8 @@ DROP TABLE IF EXISTS `majors`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `majors` (
   `major_srl` bigint(11) NOT NULL AUTO_INCREMENT,
+  `campus` varchar(80) CHARACTER SET utf8 NOT NULL,
+  `college` varchar(80) CHARACTER SET utf8 NOT NULL,
   `dept` varchar(80) CHARACTER SET utf8 NOT NULL,
   `name` varchar(80) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`major_srl`),
@@ -153,7 +155,6 @@ CREATE TABLE `members` (
   `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `major_srl` bigint(11) NOT NULL,
   `admission_year` smallint(6) NOT NULL,
-  `campus` varchar(80) CHARACTER SET utf8 NOT NULL,
   `abeek` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`member_srl`),
   UNIQUE KEY `user_id` (`user_id`),
@@ -182,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-24 21:15:39
+-- Dump completed on 2019-06-09 16:52:37
