@@ -41,37 +41,56 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <style>
+      html,
+      body {
+        background: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg') center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        height: 100%;
+        margin: 0;
+
+        color: white;
+      }
+
+      .login-container {
+        width: 100%;
+        min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+        min-height: 100vh; /* These two lines are counted as one :-)       */
+
+        display: flex;
+        align-items: center;
+        align-content: center;
+      }
+    </style>
   </head>
   <body>
     <!--login.php로 post 형식으로 아이디: id, 비밀번호: password를 넘김-->
-    <div class="container login-container">
-      <p><h3>로그인</h3></p>
-      <form action="/?act=login" method="post">
-        <div class="row">
-          <div class="col-5">
-            <label for="id">아이디</label>
+    <div class="container-fluid login-container">
+      <div style="margin: auto; border: 1px solid white; padding: 25px">
+        <h1 class="text-center">Can I Graduate?</h1>
+        <h2 class="text-center">중앙대학교</h2>
+        <hr />
+        <form action="/?act=login" method="post">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input id="id" type="text" class="form-control" name="id" placeholder="ID">
+            </div>
           </div>
-          <div class="col-7">
-            <input class="login-input" type="text" name="id">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-5">
-            <label for="password">비밀번호</label>
-          </div>
-          <div class="col-7">
-            <input class="login-input" type="text" name="password">
-          </div>
-        </div>
-        <div class="row ">
-          <div class="col-4">
-            <input type="submit" class="btn btn-primary" name="submit" value="로그인">
-          </div>
-          <div class="col-4">
-            <input type="button" class="btn btn-primary" name="join" onclick="location.href='/?act=join'" value="회원가입">
-          </div>
-        </div>
-      </form>
+          <button type="submit" class="btn btn-success btn-block">로그인</button>
+          <hr />
+          <button type="button" class="btn btn-info btn-block" onclick="location.href='/?act=join'">회원가입</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
