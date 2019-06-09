@@ -12,6 +12,7 @@ class User
     public static $admission_year;
     public static $campus;
 
+    public $credit;
     public static $gpa; //학점
     public static $gpa_major;//전공 학점
 
@@ -42,14 +43,14 @@ class User
       self::$campus = $userInfo['campus'];
     }
 
-    //public static function get
+    
 
     /*
     attended_lectures에서 수강한 과목들을 가져온다.
     */
     public static function getattendedLectures()
     {
-        $sql ="SELECT attended_lectures.lecture_srl, attended_lectures.grade, lectures.course_no, lectures.title, lectures.college, lectures.dept, lectures.course_type, lectures.abeek_type
+        $sql ="SELECT attended_lectures.lecture_srl, attended_lectures.grade, lectures.course_no, lectures.title, lectures.credit,lectures.college, lectures.dept, lectures.course_type, lectures.abeek_type
         FROM attended_lectures INNER JOIN lectures USING(lecture_srl) WHERE member_srl= {$_SESSION['user_srl']}";
 
         $data= DB::getConn()->query($sql);
