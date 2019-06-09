@@ -7,10 +7,9 @@
 		$id = $_POST['id'];
 		$password = $_POST['password'];
 
-		$conn = mysqli_connect('127.0.0.1','cig_admin','1','can_i_graduate');
+		$conn = DB::getConn();
 		$loginSql = "SELECT * FROM members WHERE user_id='$id'";
 		$loginSqlResult = mysqli_query($conn,$loginSql);
-		mysqli_close($conn);
 
 		if($loginSqlResult==false){
 			echo "Server DB Error.";
