@@ -22,8 +22,8 @@
 
 		echo $select_major_srl['major_srl'];
 		//insert user info to db
-		$insertSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,campus,abeek) VALUES
-		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', {$select_major_srl['major_srl']} , {$_POST['admission_year']},'{$_POST['campus']}','{$_POST['abeek']}')";
+		$insertSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,abeek) VALUES
+		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', {$select_major_srl['major_srl']} , {$_POST['admission_year']},'{$_POST['abeek']}')";
 
 		if (DB::getConn()->query($insertSql) === TRUE)
 		{
@@ -107,14 +107,13 @@
             <option value='2016'>2016</option>
             <option value='2017'>2017</option>
             <option value='2018'>2018</option>
-            <option value='2019'>2019</option>
           </select>
         </div>
         <div class="form-group">
           <label for="campus">캠퍼스</label>
           <select class="form-control" id="campus" name='campus'>
-            <option value='anseong'>안성캠퍼스</option>
-            <option value='seoul'>서울캠퍼스</option>
+            <option value='서울'>서울캠퍼스</option>
+            <option value='안성'>안성캠퍼스</option>
           </select>
         </div>
         <div class="form-group">
@@ -125,7 +124,7 @@
           </select>
         </div>
         <button type="submit" name="submit" class="btn btn-primary">확인</button>
-				<button name="cancel" class="btn btn-primary" onclick="location.href='/?act=login'">취소</button>
+        <button name="cancel" class="btn btn-primary" onclick="location.href='/?act=login'">취소</button>
       </form>
     </div>
  </body>
