@@ -97,8 +97,9 @@ class File
             else
             {
               echo "error: " . DB::getConn()->error;
+
             }
-            echo 'if문 끝<br>';
+          
           }
 
 
