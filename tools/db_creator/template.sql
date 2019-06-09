@@ -1,8 +1,8 @@
--- MySQL dump 10.14  Distrib 5.5.60-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.40-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: can_i_graduate
 -- ------------------------------------------------------
--- Server version	5.5.60-MariaDB
+-- Server version	10.1.40-MariaDB-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -127,7 +127,7 @@ CREATE TABLE `majors` (
   `dept` varchar(80) CHARACTER SET utf8 NOT NULL,
   `name` varchar(80) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`major_srl`),
-  UNIQUE KEY `name` (`name`)
+  UNIQUE KEY `campus` (`campus`,`college`,`dept`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -183,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 16:52:37
+-- Dump completed on 2019-06-09 21:09:56
