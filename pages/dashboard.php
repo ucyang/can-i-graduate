@@ -10,7 +10,11 @@
 		$memberinfo = $sqlResult->fetch_assoc();
 
 	}
+	User::init();
 	User::getattendedLectures();
+	
+
+	User::getGraduationStatus();
 
 	/*
 	관리자로 로그인 하면 강의들을 불러와 db에 저장함

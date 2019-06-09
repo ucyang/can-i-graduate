@@ -54,21 +54,21 @@ class User
     {
 
       for($j = 0; $j<count(self::$attended_lectures);$j++){
-        echo "<br>".self::$attended_lectures[$j]['title']."<br><br>";
+
   		  if(preg_match('/(자유선택)/',self::$attended_lectures[$j]['course_class'])){
-          echo "자유선택<br>";
+
   			  self::$credit['free'] += (int)self::$attended_lectures[$j]['credit'];
   		  }
   		  if(preg_match('/(교양)/',self::$attended_lectures[$j]['course_class'])){
-          echo "교양<br>";
+
   			  self::$credit['general'] += (int)self::$attended_lectures[$j]['credit'];
   		  }
   		  if(preg_match('/(전공)/',self::$attended_lectures[$j]['course_class'])){
-          echo "전공<br>";
+
   			  self::$credit['major'] += (int)self::$attended_lectures[$j]['credit'];
   		  }
   		  if(preg_match('/(BSM)/',self::$attended_lectures[$j]['abeek_type'])){
-          echo "BSM<br>";
+
   			  self::$credit['BSM'] += (int)self::$attended_lectures[$j]['credit'];
   		  }
   		  if(preg_match('/(설계)/',self::$attended_lectures[$j]['abeek_type'])){
@@ -81,11 +81,11 @@ class User
           self::$commonLecture['creative'] = "Y";
         }
         if(preg_match('/(한국사)/',self::$attended_lectures[$j]['title'])){
-          echo "한국사<br>";
+
           self::$commonLecture['korean_history'] = "Y";
         }
         if(preg_match('/(글쓰기)/',self::$attended_lectures[$j]['title'])){
-          echo "글쓰기<br>";
+
           self::$commonLecture['writing'] = "Y";
         }
         if(preg_match('/(ACT)/',self::$attended_lectures[$j]['title'])){
@@ -143,8 +143,7 @@ class User
   	  }
       self::$credit['total'] = (int)self::$credit['general'] + (int)self::$credit['free'] +(int)self::$credit['major'];
       //self::$gpa /= self::$credit['total'];
-      var_dump(self::$credit);
-      var_dump(self::$commonLecture);
+
     }
 
     /*
