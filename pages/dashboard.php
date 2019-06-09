@@ -10,6 +10,7 @@
 		$memberinfo = $sqlResult->fetch_assoc();
 
 	}
+	User::getattendedLectures();
 
 	/*
 	관리자로 로그인 하면 강의들을 불러와 db에 저장함
@@ -17,15 +18,16 @@
 
 	if($memberinfo['nickname']=='admin')
 	{
-		File::connectFile(CIG_BASEDIR."/config/lecture(1).csv");
+		File::connectFile(CIG_BASEDIR."/config/lecture.csv");
 		File::parseLecturesFile();
 		File::closeFile();
+		/*
 		File::connectFile(CIG_BASEDIR."/config/lecture(2).csv");
 		File::parseLecturesFile();
 		File::closeFile();
 		File::connectFile(CIG_BASEDIR."/config/lecture(3).csv");
 		File::parseLecturesFile();
-		File::closeFile();
+		File::closeFile();*/
 	}
 
 
