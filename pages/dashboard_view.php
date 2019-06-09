@@ -130,27 +130,28 @@
   </style>
 </head>
 <body>
-  <div class="navbar bg-light navbar-expand-sm">
+  <div class="navbar navbar-inverse">
     <!--로고-->
-    <a href="#" class="navbar-brand">Can I graduate</a>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/?act=detail">세부 정보 페이지</a>
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">Can I graduate</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <a href="/?act=detail">세부 정보 페이지</a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="/?act=logout">로그아웃</a>
+    </ul>
+    <ul class='nav navbar-nav navbar-right'>
+      <li>
+        <a href="#" disabled><?php echo $memberinfo['nickname'];?>님 안녕하세요</a>
+
+      </li>
+      <li>
+        <a href="/?act=logout"><span class='glyphicon glyphicon-log-out'></span>로그아웃</a>
       </li>
     </ul>
     <!--~님 안녕하세요-->
-    <div class="greeting">                             <!--php로 구현해야 할 것들: 사용자의 이름(name)-->
-      <?php
 
-
-      echo $memberinfo['nickname'];
-
-       ?>님 안녕하세요
-    </div>
   </div>
   <div class="container">
     <div class="row" id="graph-row">
