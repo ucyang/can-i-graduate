@@ -18,7 +18,7 @@
 			if($memberInfoArr['user_id']!='' && password_verify($password, $memberInfoArr['password'])){
 				//session에 member_srl만 저장하도록 바꾸기
 				$_SESSION['user_srl'] = $memberInfoArr['member_srl'];
-				User::init();
+			
 
 				Header("Location: /?act=dashboard");
 			} else {
