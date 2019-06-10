@@ -84,10 +84,14 @@ class File
         $row =1;
         while (($data = fgetcsv(self::$file,0,",")) !== FALSE)
         {
+          foreach($data as $key=>$value)
+          {
+            $data[$key]=preg_replace('/[^가-힣a-zA-Z0-9()\/]/', '', $value);
+          }
 
           if($row>1)
           {
-
+            var_dump($data);
             $sql = "INSERT INTO lectures(course_no,class_no,year,semester,campus,college,dept,title,inst_name,credit,course_class,course_type,abeek_type)VALUES({$data[0]},{$data[1]},{$data[2]},{$data[3]},'{$data[4]}','{$data[5]}','{$data[6]}','{$data[7]}','{$data[8]}',{$data[9]},'{$data[10]}','{$data[11]}','{$data[12]}')";
 
             if(DB::getConn()->query($sql))
@@ -99,7 +103,7 @@ class File
               echo "error: " . DB::getConn()->error;
 
             }
-          
+
           }
 
 
