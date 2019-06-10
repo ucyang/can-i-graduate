@@ -24,7 +24,6 @@
 		//insert user info to db
 		$insertSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,abeek) VALUES
 		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', {$select_major_srl['major_srl']} , {$_POST['admission_year']},'{$_POST['abeek']}')";
-
 		if (DB::getConn()->query($insertSql) === TRUE)
 		{
 			//insert success
@@ -36,6 +35,13 @@
 		    echo "Error: " . DB::getConn()->error;
 		}
 
+		$selectSql = "SELECT member_srl FROM members WHERE user_id = '{$_POST['id']}'";
+		$memberSRL = DB::getConn()->query($selectSql)->fetch_assoc();
+
+		$insertGraduationStatusSql = "INSERT INTO graduation_status(member_srl, gpa,gpa_major,english,chinese_char,paper,counseling,portfolio,coding_boot_camp,topcit,open_source)
+																		VALUES('{$memberSRL['member_srl']}',0,0,'X','X','X','X','X','X','X','X')";
+		DB::getConn()->query($insertGraduationStatusSql);
+		Header("Location: /?act=login");
 	}
 	// 회원 가입 중 취소
 ?>
