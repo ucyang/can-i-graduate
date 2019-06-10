@@ -128,10 +128,12 @@
         <a href="#" class="navbar-brand">Can I graduate</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active">
+        <li >
           <a href="/?act=dashboard">대시보드</a>
         </li>
-
+        <li class="active">
+          <a href="/?act=detail">세부정보페이지</a>
+        </li>
       </ul>
       <ul class='nav navbar-nav navbar-right'>
         <li>
@@ -232,16 +234,11 @@
             </tr>
           </thead>
           <?php
-          User::getattendedLectures();
-          echo User::$admission_year."<br>";
-          /*
-          echo '<pre>';
-          var_dump(User::$attended_lectures);
-          echo '</pre>';
-          */
+
           for($j = 0; $j<count(User::$attended_lectures);$j++){
+            $k = $j+(int)1;
             echo "<tr class='lectures'>";
-            echo "<td>$j</td>";
+            echo "<td>". $k ."</td>";
             echo "<td><input type='text' value='".User::$attended_lectures[$j]['grade']."' disabled></td>";
             echo "<td class='title'>".User::$attended_lectures[$j]['title']."</td>";
             echo "<td class='course_no'>".User::$attended_lectures[$j]['course_no']."</td>";
@@ -297,96 +294,120 @@
 </script>
       <div class="container">
         <h3>세부 졸업 요건</h3>
-        <form  action="save_detail.php" method="post">
+        <form  action="/?act=save_detail" method="post">
           <div class="row" id="table-row">
             <!--졸업관련 정보를 보여주는 표들-->
             <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
-            <div class="col-12 col-md-6 col-lg-4" style="width:100%; height:300px;overflow: auto ;margin-bottom:20px">
-              <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
+            <div class="col-12 col-md-6 col-lg-4"style="width:100%; height:300px;overflow: auto ;margin-bottom:20px" >
               <table class="table table-bordered">
                 <tr>
-                  <th colspan="2" class="col-12">공통교양</th>
+                  <th colspan="2" class="col-12">공통교양</th> <!-- 필수 교양과목 7과목입니다. 각 과목을 수강했는지 받아와야 합니다. -->
                 </tr>
                 <tr>
                   <td class="col-7">ACT</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"   value="O" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['ACT']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">한국사</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['korean_history']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">글쓰기</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="X" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['writing']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">창의와소통</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['creative']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">디자인적사고와 문제해결</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['design']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">앙트레프레너십시대의회계</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['Accounting']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">COMMUNICATION IN ENGLISH</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O" ></td>
+                  <td class="col-5"><?php if(User::$commonLecture['English']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
               </table>
             </div>
-            <!--표의 숫자를 나타내는 php 변수가 있으면 for문으로 후에 수정할 것-->
             <div class="col-12 col-md-6 col-lg-4" style="width:100%; height:300px;overflow: auto ;margin-bottom:20px">
-              <!--현재는 3행만 넣어놨으나 나중에는 이것도 for문을 이용해 각 table의 필요한 행만큼 만들도록 수정할 것-->
               <table class="table table-bordered">
                 <tr>
-                  <th colspan="2" class="col-12">전공필수</th>
+                  <th colspan="2" class="col-12">핵심교양</th> <!-- 이 5개 영역 각각을 1과목씩 들었는지 체크해야 합니다-->
+                </tr>
+                <tr>
+                  <td class="col-7">핵심-도전</td>
+                  <td class="col-5"><?php if(User::$credit['core_challenge']=='Y') echo 'O'; else echo 'X';?></td>
+                </tr>
+                <tr>
+                  <td class="col-7">핵심-창의</td>
+                  <td class="col-5"><?php if(User::$credit['core_creative']=='Y') echo 'O'; else echo 'X';?></td>
+                </tr>
+                <tr>
+                  <td class="col-7">핵심-융합</td>
+                  <td class="col-5"><?php if(User::$credit['core_convergence']=='Y') echo 'O'; else echo 'X';?></td>
+                </tr>
+                <tr>
+                  <td class="col-7">핵심-신뢰</td>
+                  <td class="col-5"><?php if(User::$credit['core_trust']=='Y') echo 'O'; else echo 'X';?></td>
+                </tr>
+                <tr>
+                  <td class="col-7">핵심-소통</td>
+                  <td class="col-5"><?php if(User::$credit['core_communication']=='Y') echo 'O'; else echo 'X';?></td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" style="width:100%; height:300px;overflow: auto;margin-bottom: 20px">
+              <table class="table table-bordered">
+                <tr>
+                  <th colspan="2" class="col-12">전공필수</th> <!-- 이 11과목을 각각 수강했는지 체크해야합니다.-->
                 </tr>
                 <tr>
                   <td class="col-7">창의적설계</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['creativeDesign']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">이산수학</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['discreteMath']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">자료구조</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['dataStructure']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">프로그래밍언어론</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['programingLanguage']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">컴퓨터구조</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['cumputerArchitecture']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">알고리즘</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['Algorithm']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">운영체제</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['os']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">휴먼ICT소프트웨어공학</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['SE']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">캡스톤디자인(1)</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['c1']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">캡스톤디자인(2)</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['c2']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
                 <tr>
                   <td class="col-7">산업체인턴쉽</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><?php if(User::$majorEssential['internship']=='Y') echo 'O'; else echo 'X';?></td>
                 </tr>
               </table>
             </div>
@@ -399,11 +420,11 @@
                 </tr>
                 <tr>
                   <td class="col-7">영어능력</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><input type="submit" name='english' class = "<?php if(User::$graduationStatus['english']=='X') {echo 'btn-danger';}else{ echo 'btn-primary';}?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['english'];?>"/></td>
                 </tr>
                 <tr>
                   <td class="col-7">한자능력</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><input type="submit" name='chinese_char' class = "<?php if(User::$graduationStatus['chinese_char']=='X') {echo 'btn-danger';}else {echo 'btn-primary';}?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['chinese_char'];?>"/></td>
                 </tr>
               </table>
             </div>
@@ -416,22 +437,20 @@
                 </tr>
                 <tr>
                   <td class="col-7">지도교수와 상담4회</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><input type="submit" name='counseling' class = "<?php if(User::$graduationStatus['counseling']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['counseling'];?>"/></td>
                 </tr>
                 <tr>
                   <td class="col-7">졸업논문</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><input type="submit" name='paper' class = "<?php if(User::$graduationStatus['paper']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['paper'];?>"/></td>
                 </tr>
                 <tr>
                   <td class="col-7">TOPCIT점수</td>
-                  <td class="col-5"><input type="button" class = "btn-primary btn-block" onclick = "change(this)"  value="O"></td>
+                  <td class="col-5"><input type="submit" name='topcit' class = "<?php if(User::$graduationStatus['topcit']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['topcit'];?>"/></td>
                 </tr>
               </table>
             </div>
           </div>
-          <div class="submit">
-            <input type="submit" name="submit" value="세부 정보 저장" class="btn btn-dark" >
-          </div>
+
         </form>
       </div>
     </div>
