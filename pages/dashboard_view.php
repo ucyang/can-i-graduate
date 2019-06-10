@@ -26,11 +26,11 @@
     function drawBarChart() {
       var data = google.visualization.arrayToDataTable([ //php로 구현해야 할 것들: (1) 수강한 교양과목 학점합 (2) 수강한 BSM과목들 학점 합 (3) 수강한 전공과목들 학점 합 (4) 수강한 모든 과목들의 학점 합 (5) 전체과목 평균학점
           ['졸업요건', '퍼센트',],
-          ['전문교양', <?php  echo User::$credit['professional']/18;?>],
-          ['BSM(18)', <?php  echo User::$credit['BSM']/18;?>],
-          ['전공학점(84)', <?php  echo User::$credit['major']/84;?>],
-          ['총 졸업학점(140)', <?php  echo User::$credit['total']/140;?>],
-          ['최저졸업평점(2.2/4.5)', <?php  echo User::$gpa/4.5;?>]
+          ['전문교양', <?php  echo User::$credit['professional']/6* 100;?>],
+          ['BSM(18)', <?php  echo User::$credit['BSM']/18* 100;?>],
+          ['전공학점(84)', <?php  echo User::$credit['major']/84* 100;?>],
+          ['총 졸업학점(140)', <?php  echo User::$credit['total']/140* 100;?>],
+          ['최저졸업평점(2.2/4.5)', <?php  echo (float)User::$gpa/4.5 * 100;?>]
         ]);
       // Set chart options
       var options = {
@@ -139,7 +139,10 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active">
-        <a href="/?act=detail">세부 정보 페이지</a>
+        <a href="/?act=dashboard">대시보드</a>
+      </li>
+      <li>
+        <a href="/?act=detail">세부정보페이지</a>
       </li>
 
     </ul>
@@ -176,31 +179,31 @@
           </tr>
           <tr>
             <td class="col-7">ACT</td>
-            <td class="col-5"><?php if(User::$commonLecture['ACT']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['ACT']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">한국사</td>
-            <td class="col-5"><?php if(User::$commonLecture['korean_history']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['korean_history']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">글쓰기</td>
-            <td class="col-5"><?php if(User::$commonLecture['writing']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['writing']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">창의와소통</td>
-            <td class="col-5"><?php if(User::$commonLecture['creative']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['creative']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">디자인적사고와 문제해결</td>
-            <td class="col-5"><?php if(User::$commonLecture['design']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['design']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">앙트레프레너십시대의회계</td>
-            <td class="col-5"><?php if(User::$commonLecture['Accounting']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['Accounting']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">COMMUNICATION IN ENGLISH</td>
-            <td class="col-5"><?php if(User::$commonLecture['English']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$commonLecture['English']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
         </table>
       </div>
@@ -211,23 +214,23 @@
           </tr>
           <tr>
             <td class="col-7">핵심-도전</td>
-            <td class="col-5">X</td>
+            <td class="col-5"><?php if(User::$credit['core_challenge']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">핵심-창의</td>
-            <td class="col-5">X</td>
+            <td class="col-5"><?php if(User::$credit['core_creative']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">핵심-융합</td>
-            <td class="col-5">X</td>
+            <td class="col-5"><?php if(User::$credit['core_convergence']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">핵심-신뢰</td>
-            <td class="col-5">X</td>
+            <td class="col-5"><?php if(User::$credit['core_trust']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">핵심-소통</td>
-            <td class="col-5">X</td>
+            <td class="col-5"><?php if(User::$credit['core_communication']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
         </table>
       </div>
@@ -238,47 +241,47 @@
           </tr>
           <tr>
             <td class="col-7">창의적설계</td>
-            <td class="col-5"><?php if(User::$majorEssential['creativeDesign']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['creativeDesign']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">이산수학</td>
-            <td class="col-5"><?php if(User::$majorEssential['discreteMath']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['discreteMath']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">자료구조</td>
-            <td class="col-5"><?php if(User::$majorEssential['dataStructure']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['dataStructure']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">프로그래밍언어론</td>
-            <td class="col-5"><?php if(User::$majorEssential['programingLanguage']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['programingLanguage']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">컴퓨터구조</td>
-            <td class="col-5"><?php if(User::$majorEssential['cumputerArchitecture']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['cumputerArchitecture']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">알고리즘</td>
-            <td class="col-5"><?php if(User::$majorEssential['Algorithm']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['Algorithm']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">운영체제</td>
-            <td class="col-5"><?php if(User::$majorEssential['os']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['os']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">휴먼ICT소프트웨어공학</td>
-            <td class="col-5"><?php if(User::$majorEssential['SE']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['SE']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">캡스톤디자인(1)</td>
-            <td class="col-5"><?php if(User::$majorEssential['c1']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['c1']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">캡스톤디자인(2)</td>
-            <td class="col-5"><?php if(User::$majorEssential['c2']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['c2']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
           <tr>
             <td class="col-7">산업체인턴쉽</td>
-            <td class="col-5"><?php if(User::$majorEssential['internship']=='Y') echo 'O'; ?></td>
+            <td class="col-5"><?php if(User::$majorEssential['internship']=='Y') echo 'O'; else echo 'X';?></td>
           </tr>
         </table>
       </div>
@@ -289,11 +292,11 @@
           </tr>
           <tr>
             <td class="col-7">영어능력</td>
-            <td class="col-5">O</td>
+            <td class="col-5"><?php echo User::$graduationStatus['english'];?></td>
           </tr>
           <tr>
             <td class="col-7">한자능력</td>
-            <td class="col-5">O</td>
+            <td class="col-5"><?php echo User::$graduationStatus['chinese_char'];?></td>
           </tr>
         </table>
       </div>
@@ -304,15 +307,15 @@
           </tr>
           <tr>
             <td class="col-7">지도교수와 상담4회</td>
-            <td class="col-5">1/4</td>
+            <td class="col-5"><?php echo User::$graduationStatus['counseling'];?></td>
           </tr>
           <tr>
             <td class="col-7">졸업논문</td>
-            <td class="col-5">PASS</td>
+            <td class="col-5"><?php echo User::$graduationStatus['paper'];?></td>
           </tr>
           <tr>
             <td class="col-7">TOPCIT(180점)</td>
-            <td class="col-5">FAIL</td>
+            <td class="col-5"><?php echo User::$graduationStatus['topcit'];?></td>
           </tr>
         </table>
       </div>
