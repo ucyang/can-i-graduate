@@ -10,6 +10,10 @@
 		$memberinfo = $sqlResult->fetch_assoc();
 
 	}
+	User::init();
+	User::getattendedLectures();
+
+	User::getGraduationStatus();
 	// portfolio, internship, 시험일정 등 관리하기
 	require 'detail_view.php';
 ?>
