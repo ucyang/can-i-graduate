@@ -420,11 +420,11 @@
                 </tr>
                 <tr>
                   <td class="col-7">영어능력</td>
-                  <td class="col-5"><input type="submit" name='english' class = "<?php if(User::$graduationStatus['english']=='X') {echo 'btn-danger';}else{ echo 'btn-primary';}?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['english'];?>"/></td>
+                  <td class="col-5"><input type="submit" id='english' name='english' class = "<?php if(User::$graduationStatus['english']=='X') {echo 'btn-danger';}else{ echo 'btn-primary';}?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['english'];?>"/></td>
                 </tr>
                 <tr>
                   <td class="col-7">한자능력</td>
-                  <td class="col-5"><input type="submit" name='chinese_char' class = "<?php if(User::$graduationStatus['chinese_char']=='X') {echo 'btn-danger';}else {echo 'btn-primary';}?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['chinese_char'];?>"/></td>
+                  <td class="col-5"><input type="submit" id='chinese_char' name='chinese_char' class = "<?php if(User::$graduationStatus['chinese_char']=='X') {echo 'btn-danger';}else {echo 'btn-primary';}?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['chinese_char'];?>"/></td>
                 </tr>
               </table>
             </div>
@@ -437,15 +437,15 @@
                 </tr>
                 <tr>
                   <td class="col-7">지도교수와 상담4회</td>
-                  <td class="col-5"><input type="submit" name='counseling' class = "<?php if(User::$graduationStatus['counseling']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['counseling'];?>"/></td>
+                  <td class="col-5"><input type="submit" id='counseling' name='counseling' class = "<?php if(User::$graduationStatus['counseling']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['counseling'];?>"/></td>
                 </tr>
                 <tr>
                   <td class="col-7">졸업논문</td>
-                  <td class="col-5"><input type="submit" name='paper' class = "<?php if(User::$graduationStatus['paper']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['paper'];?>"/></td>
+                  <td class="col-5"><input type="submit" id='paper' name='paper' class = "<?php if(User::$graduationStatus['paper']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['paper'];?>"/></td>
                 </tr>
                 <tr>
                   <td class="col-7">TOPCIT점수</td>
-                  <td class="col-5"><input type="submit" name='topcit' class = "<?php if(User::$graduationStatus['topcit']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['topcit'];?>"/></td>
+                  <td class="col-5"><input type="submit" id='topcit' name='topcit' class = "<?php if(User::$graduationStatus['topcit']=='X') echo 'btn-danger';else echo 'btn-primary';?> btn-block" onclick = "change(this)"  value= "<?php echo User::$graduationStatus['topcit'];?>"/></td>
                 </tr>
               </table>
             </div>

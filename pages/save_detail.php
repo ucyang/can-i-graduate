@@ -8,5 +8,5 @@
   {
     echo "ERROR: ". DB::getConn()->error;
   }
-  Header("Location: /?act=detail");
+  Header("Location: /?act=detail#$key");
  ?>
