@@ -9,7 +9,7 @@ class File
 
     public static function connectFile($uploadFile)
     {
-      echo 'connectFile<br>';
+
       setlocale(LC_CTYPE, 'ko_KR.utf8');
       if(file_exists($uploadFile))
       {
@@ -17,8 +17,6 @@ class File
           echo '파일 읽기 실패<br>';
           echo "파일 경로 : $uploadFile<br>";
         }
-      }else{
-        echo '파일 읽기 성공.<br>';
       }
 
 
@@ -40,8 +38,7 @@ class File
         {
           $class_srl=preg_replace('/[^0-9]+/', '', $data[3]);
           $grade = preg_replace('/([^0-9\.])/', '', $data[8]);
-          var_dump($class_srl);
-          var_dump($grade);
+
 
           $sql = "SELECT lecture_srl FROM lectures WHERE course_no = '$class_srl'";
           echo "<br>$sql<br>";
@@ -56,7 +53,7 @@ class File
           //var_dump($result);
 
           $sql = "INSERT INTO attended_lectures(member_srl, lecture_srl, grade) VALUES('{$_SESSION['user_srl']}', '{$lectureInfo['lecture_srl']}', '$grade')";
-          echo "<br>$sql<br>";
+
           if(DB::getConn()->query($sql)==false)
           {
             echo "<br>ERROR : ", DB::getConn()->error;
@@ -91,12 +88,12 @@ class File
 
           if($row>1)
           {
-            var_dump($data);
+
             $sql = "INSERT INTO lectures(course_no,class_no,year,semester,campus,college,dept,title,inst_name,credit,course_class,course_type,abeek_type)VALUES({$data[0]},{$data[1]},{$data[2]},{$data[3]},'{$data[4]}','{$data[5]}','{$data[6]}','{$data[7]}','{$data[8]}',{$data[9]},'{$data[10]}','{$data[11]}','{$data[12]}')";
 
             if(DB::getConn()->query($sql))
             {
-              echo "데이터 입력 성공";
+
             }
             else
             {
