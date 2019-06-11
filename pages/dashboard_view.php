@@ -132,36 +132,24 @@
   </style>
 </head>
 <body>
-  <div class="navbar navbar-inverse">
-    <!--로고-->
-    <div class="navbar-header">
-      <a href="#" class="navbar-brand">Can I graduate</a>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!--로고-->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Can I Graduate?</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/?act=dashboard">대시보드</a></li>
+        <li><a href="/?act=detail">세부정보</a></li>
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+        <li><a href="/?act=modify" disabled><span class="glyphicon glyphicon-user"></span><?php echo $memberinfo['nickname'];?></a></li>
+        <li><a href="/?act=logout"><span class="glyphicon glyphicon-log-out"></span>로그아웃</a></li>
+      </ul>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="/?act=dashboard">대시보드</a>
-      </li>
-      <li>
-        <a href="/?act=detail">세부정보페이지</a>
-      </li>
+  </nav>
 
-    </ul>
-    <ul class='nav navbar-nav navbar-right'>
-      <li>
-        <a href="#" disabled><?php echo $memberinfo['nickname'];?>님 안녕하세요</a>
-
-      </li>
-      <li>
-        <a href="/?act=modify"><span class='glyphicon glyphicon-user'></span>회원정보수정</a>
-      </li>
-      <li>
-        <a href="/?act=logout"><span class='glyphicon glyphicon-log-out'></span>로그아웃</a>
-      </li>
-    </ul>
-    <!--~님 안녕하세요-->
-
-  </div>
-  <div class="container">
+  <div class="container" style="margin-top:50px">
     <div class="row" id="graph-row">
       <!--학점 반원 그래프-->
       <div class="col-12 col-md-5" id="pie-chart">

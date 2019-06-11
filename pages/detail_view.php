@@ -122,35 +122,24 @@
     </script>
   </head>
   <body>
-    <div class="navbar navbar-inverse">
-      <!--로고-->
-      <div class="navbar-header">
-        <a href="#" class="navbar-brand">Can I graduate</a>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <!--로고-->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Can I Graduate?</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/?act=dashboard">대시보드</a></li>
+          <li class="active"><a href="/?act=detail">세부정보</a></li>
+        </ul>
+        <ul class='nav navbar-nav navbar-right'>
+          <li><a href="/?act=modify" disabled><span class="glyphicon glyphicon-user"></span><?php echo $memberinfo['nickname'];?></a></li>
+          <li><a href="/?act=logout"><span class="glyphicon glyphicon-log-out"></span>로그아웃</a></li>
+        </ul>
       </div>
-      <ul class="nav navbar-nav">
-        <li >
-          <a href="/?act=dashboard">대시보드</a>
-        </li>
-        <li class="active">
-          <a href="/?act=detail">세부정보페이지</a>
-        </li>
-      </ul>
-      <ul class='nav navbar-nav navbar-right'>
-        <li>
-          <a href="#" disabled><?php echo $memberinfo['nickname'];?>님 안녕하세요</a>
+    </nav>
 
-        </li>
-        <li>
-          <a href="/?act=modify"><span class='glyphicon glyphicon-user'></span>회원정보수정</a>
-        </li>
-        <li>
-          <a href="/?act=logout"><span class='glyphicon glyphicon-log-out'></span>로그아웃</a>
-        </li>
-      </ul>
-      <!--~님 안녕하세요-->
-
-    </div>
-    <div class="container">
+    <div class="container" style="margin-top:50px">
       <!--체크박스를 선택하거나 검색하면 해당 과목만 보여주는 것 구현 필요-->
       <div class="indicator-container">
         <div class="row">
@@ -177,9 +166,9 @@
       </div>
       <!--전체 과목들 중에서 내가 들은 과목 골라서 저장하기-->
       <!--input type checkbox에 체크된 것들이 save_classes.php로 넘어간다-->
-      <div class="table-responsive">
-        <form  action="?act=save_lectures" method="post">
-          <table class="table" overflow="auto" >
+      <form  action="?act=save_lectures" method="post">
+        <div class="table-responsive" style="height: 20vw; overflow: auto">
+          <table class="table table-striped" overflow="auto" >
             <thead class="thead-light">
 
               <tr>
@@ -216,14 +205,14 @@
              ?>
 
           </table>
-          <div class="d-flex justify-content-center">
-            <input type="submit" class="btn btn-light" value="저장">
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <input type="submit" class="btn btn-light" value="저장">
+        </div>
+      </form>
       <h3>저장된 수업들</h3>
-      <div class="table-responsive">
-        <table class="table">
+      <div class="table-responsive" style="height: 20vw; overflow: auto">
+        <table class="table table-striped">
           <thead class="thead-light">
             <tr>
               <th>체크박스</th>
