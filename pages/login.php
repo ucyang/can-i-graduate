@@ -31,7 +31,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>Can I Graduate?</title>
+    <title>Can I Graduate? - 중앙대학교</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,6 +70,7 @@
     <!--login.php로 post 형식으로 아이디: id, 비밀번호: password를 넘김-->
     <div class="container-fluid login-container">
       <div style="margin: auto; border: 1px solid white; padding: 25px">
+        <h1 class="text-center"><span class="glyphicon glyphicon-education"></span></h1>
         <h1 class="text-center">Can I Graduate?</h1>
         <h2 class="text-center">중앙대학교</h2>
         <hr />
@@ -77,7 +78,7 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input id="id" type="text" class="form-control" name="id" placeholder="ID">
+              <input id="id" type="text" class="form-control" name="id" placeholder="ID" autofocus="autofocus">
             </div>
           </div>
           <div class="form-group">
@@ -86,9 +87,9 @@
               <input id="password" type="password" class="form-control" name="password" placeholder="Password">
             </div>
           </div>
-          <button type="submit" class="btn btn-success btn-block">로그인</button>
+          <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-log-in"></span> 로그인</button>
           <hr />
-          <button type="button" class="btn btn-info btn-block" onclick="location.href='/?act=join'">회원가입</button>
+          <button type="button" class="btn btn-info btn-block" onclick="location.href='/?act=join'"><span class="glyphicon glyphicon-plus"></span> 회원가입</button>
         </form>
       </div>
     </div>

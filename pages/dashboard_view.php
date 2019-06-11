@@ -136,15 +136,15 @@
     <div class="container-fluid">
       <!--로고-->
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Can I Graduate?</a>
+        <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-education"></span> Can I Graduate?</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="/?act=dashboard">대시보드</a></li>
         <li><a href="/?act=detail">세부정보</a></li>
       </ul>
       <ul class='nav navbar-nav navbar-right'>
-        <li><a href="/?act=modify" disabled><span class="glyphicon glyphicon-user"></span><?php echo $memberinfo['nickname'];?></a></li>
-        <li><a href="/?act=logout"><span class="glyphicon glyphicon-log-out"></span>로그아웃</a></li>
+        <li><a href="/?act=modify" disabled><span class="glyphicon glyphicon-user"></span> <?php echo $memberinfo['nickname'];?></a></li>
+        <li><a href="/?act=logout"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
       </ul>
     </div>
   </nav>
