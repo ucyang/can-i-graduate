@@ -5,5 +5,5 @@
 
 	echo "이용해주셔서 감사합니다.";
 
-	Header("Location: /?act=dashboard");
+	Header("Location: /?act=login");
 ?>

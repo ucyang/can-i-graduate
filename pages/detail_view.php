@@ -141,6 +141,9 @@
 
         </li>
         <li>
+          <a href="/?act=modify"><span class='glyphicon glyphicon-user'></span>회원정보수정</a>
+        </li>
+        <li>
           <a href="/?act=logout"><span class='glyphicon glyphicon-log-out'></span>로그아웃</a>
         </li>
       </ul>
