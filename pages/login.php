@@ -21,8 +21,6 @@
 			
 
 				Header("Location: /?act=dashboard");
-			} else {
-				echo "다시 로그인하세요.";
 			}
 		}
 	}
