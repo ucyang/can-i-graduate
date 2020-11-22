@@ -128,7 +128,7 @@ CREATE TABLE `majors` (
   `name` varchar(80) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`major_srl`),
   UNIQUE KEY `campus` (`campus`,`college`,`dept`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,6 +137,7 @@ CREATE TABLE `majors` (
 
 LOCK TABLES `majors` WRITE;
 /*!40000 ALTER TABLE `majors` DISABLE KEYS */;
+INSERT INTO `majors` VALUES (1,'서울','창의ICT공과대학','소프트웨어학부','소프트웨어학부'),(2,'서울','창의ICT공과대학','컴퓨터공학부','소프트웨어전공'),(3,'서울','창의ICT공과대학','컴퓨터공학부','컴퓨터공학부');
 /*!40000 ALTER TABLE `majors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,4 +184,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 21:09:56
+-- Dump completed on 2019-06-09 21:43:42

@@ -1,8 +1,17 @@
 <?php
-	if(array_key_exists('user_id', $_SESSION)) Header("Location:/?act=dashboard");
+  $selectSql = "SELECT * FROM members WHERE member_srl = {$_SESSION['user_srl']}";
+
+  if($result = DB::getConn()->query($selectSql))
+  {
+
+    $member_info =$result->fetch_assoc();
+  }else {
+     echo 'Error: '.DB::getConn()->error;
+  }
 
 	if(isset($_POST['password']))
 	{
+
 		$encryped_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 		//get major_srl from db
@@ -12,7 +21,7 @@
 		{
 
 			$select_major_srl = $sqlResult->fetch_assoc();
-			var_dump($select_major_srl);
+
 		}
 		else
 		{
@@ -22,12 +31,18 @@
 
 		echo $select_major_srl['major_srl'];
 		//insert user info to db
-		$insertSql = "INSERT INTO members (user_id,nickname,email,password,major_srl,admission_year,abeek) VALUES
-		('{$_POST['id']}','{$_POST['nickname']}','{$_POST['email']}','$encryped_password', {$select_major_srl['major_srl']} , {$_POST['admission_year']},'{$_POST['abeek']}')";
-		if (DB::getConn()->query($insertSql) === TRUE)
+		$updateSql = "UPDATE members
+                  SET password ='$encryped_password',
+                  major_srl = {$select_major_srl['major_srl']},
+                  nickname = '{$_POST['nickname']}',
+                  email = '{$_POST['email']}',
+                  admission_year ={$_POST['admission_year']},
+                  abeek ='{$_POST['abeek']}'
+                  WHERE member_srl ={$_SESSION['user_srl']}";
+		if (DB::getConn()->query($updateSql) === TRUE)
 		{
 			//insert success
-	    echo "New record created successfully";
+	    echo "update successfully";
 		}
 		else
 		{
@@ -35,13 +50,8 @@
 		    echo "Error: " . DB::getConn()->error;
 		}
 
-		$selectSql = "SELECT member_srl FROM members WHERE user_id = '{$_POST['id']}'";
-		$memberSRL = DB::getConn()->query($selectSql)->fetch_assoc();
 
-		$insertGraduationStatusSql = "INSERT INTO graduation_status(member_srl, gpa,gpa_major,english,chinese_char,paper,counseling,portfolio,coding_boot_camp,topcit,open_source)
-																		VALUES('{$memberSRL['member_srl']}',0,0,'X','X','X','X','X','X','X','X')";
-		DB::getConn()->query($insertGraduationStatusSql);
-		Header("Location: /?act=login");
+		Header("Location: /?act=logout");
 	}
 	// 회원 가입 중 취소
 ?>
@@ -49,7 +59,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>Sign Up - Can I Graduate?</title>
+    <title>Modify - Can I Graduate?</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,23 +82,23 @@
       join.php로 넘어감
     -->
     <div class="container">
-      <p><h3>회원가입 페이지</h3></p>
-      <form action="/?act=join" method="post">
+      <p><h3>회원 정보 수정</h3></p>
+      <form action="/?act=modify" method="post">
         <div class="form-group">
           <label for="id">아이디</label>
-          <input class="form-control" type="text" name="id" placeholder="아이디를 입력해주세요" required name='id'>
+          <input class="form-control" type="text" name="id" placeholder="아이디를 입력해주세요" required name='id' value='<?php echo $member_info['user_id']; ?>' disabled>
         </div>
         <div class="form-group">
           <label for="password">비밀번호</label>
-          <input class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요" required name='password'>
+          <input class="form-control" type="password" name="password" placeholder="비밀번호를 입력해주세요" required name='password' >
         </div>
         <div class="form-group">
           <label for="nickname">닉네임</label>
-          <input class="form-control" type="text" name="nickname" placeholder="이름을 입력해주세요" required name='nickname'>
+          <input class="form-control" type="text" name="nickname" placeholder="이름을 입력해주세요" required name='nickname' value='<?php echo $member_info['nickname']; ?>'>
         </div>
         <div class="form-group">
           <label for="email">이메일</label>
-          <input class="form-control" type="email" name="email" placeholder="이메일을 입력해주세요" required name='email'>
+          <input class="form-control" type="email" name="email" placeholder="이메일을 입력해주세요" required name='email' value='<?php echo $member_info['email']; ?>'>
         </div>
         <div class="form-group">
           <label for="university">대학교</label>
@@ -130,7 +140,7 @@
           </select>
         </div>
         <button type="submit" name="submit" class="btn btn-primary">확인</button>
-        <button name="cancel" class="btn btn-primary" onclick="location.href='/?act=login'">취소</button>
+        <button name="cancel" class="btn btn-primary" onclick="location.href='/?act=dashboard'">취소</button>
       </form>
     </div>
  </body>

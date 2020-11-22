@@ -4,5 +4,6 @@
  */
 class Data
 {
-    static public $data = NULL;
+    public static $data = NULL;
+
 }
