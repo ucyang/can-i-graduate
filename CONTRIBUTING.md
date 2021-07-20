@@ -19,7 +19,7 @@
   - Entire error message
     - Web page screenshots
     - Screenshots of console, network tab in browser developer tool.
-  - Website addess which shows the problem
+  - Website address which shows the problem
 
 ## Pull requests (PR)
 
